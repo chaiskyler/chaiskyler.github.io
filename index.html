@@ -60,6 +60,12 @@
       line-height: 1.2em;
       transition: background 0.2s, color 0.2s;
       -webkit-font-smoothing: antialiased;
+      animation: fadein 0.8s ease-out;
+    }
+    
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
 
     /* ── Layout ──────────────────────────────────────────────── */
@@ -563,6 +569,16 @@
       .topbar, .toggle-wrap { display: none; }
     }
   </style>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 </head>
 
 <body>
