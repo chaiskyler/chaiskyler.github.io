@@ -96,7 +96,10 @@
      gap: 8px;
     }
 
-    .topbar-brand:hover { color: var(--hover) }
+    .topbar-brand:hover { 
+    color: var(--hover);
+    transition: color 0.2s ease-in-out;
+    }
 
     .topbar-logo { 
     width: 45px; 
@@ -250,6 +253,7 @@
 
     .toc ol li a:hover {
       text-decoration: underline;
+      transition: color 0.2s ease-in-out;
     }
 
     /* ── Body content ────────────────────────────────────────── */
@@ -293,10 +297,22 @@
       text-underline-offset: 3px;
     }
 
-     a:hover { color: var(--hover); }
-    .toc ol li a:hover { color: var(--hover); }
-    .fn-ref a:hover { color: var(--hover); }
-    .fn-ref:hover { color: var(--hover); }
+     a:hover { 
+     color: var(--hover);
+     transition: color 0.2s ease-in-out;
+     }
+    .toc ol li a:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
+    .fn-ref a:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
+    .fn-ref:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
 
     .divider {
     border: none;
@@ -448,6 +464,7 @@
 }
     .fn-ref a:hover {
      color: var(--hover) !important;
+     transition: color 0.2s ease-in-out;
 }
 
     .fn-tooltip {
@@ -522,7 +539,10 @@
       letter-spacing: 0.01em;
     }
 
-    .pdf-toggle:hover { color: var(--hover); }
+    .pdf-toggle:hover { 
+     color: var(--hover);
+     transition: color 0.2s ease-in-out;
+     }
 
     .pdf-toggle .pdf-caret {
       display: inline-block;
@@ -561,6 +581,7 @@
     .pdf-btn:hover {
       color: var(--hover);
       border-color: color: var(--hover);
+      transition: color 0.2s ease-in-out;
     }
 
     /* ── Print ───────────────────────────────────────────────── */
