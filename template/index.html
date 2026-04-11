@@ -777,8 +777,17 @@ umbralclarity.com
   /* Footnote behavior: hover tooltip on desktop, inline expansion on mobile */
 const isMobile = () => window.innerWidth <= 768;
 
+// On mobile, strip href from footnote anchors at load time so they can't navigate
+if (isMobile()) {
+  document.querySelectorAll('.fn-ref a').forEach(a => {
+    a.dataset.href = a.getAttribute('href');
+    a.removeAttribute('href');
+  });
+}
+
 document.querySelectorAll('.fn-ref').forEach(ref => {
-  // Desktop: tooltip edge detection (unchanged)
+
+  // Desktop: tooltip edge detection
   ref.addEventListener('mouseenter', () => {
     if (isMobile()) return;
     const tip = ref.querySelector('.fn-tooltip');
@@ -798,37 +807,53 @@ document.querySelectorAll('.fn-ref').forEach(ref => {
     if (!isMobile()) return;
     e.preventDefault();
 
-    // Find or create the inline expansion block, inserted after the parent <p>
-    const refId = ref.querySelector('a')?.getAttribute('href')?.replace('#', '');
+    const a = ref.querySelector('a');
+const refId = (a?.dataset.href || a?.getAttribute('href') || '').replace('#', '');
     const fnEl = refId ? document.getElementById(refId) : null;
     const fnText = fnEl
       ? fnEl.childNodes[0]?.textContent?.trim()
       : ref.querySelector('.fn-tooltip')?.textContent?.trim();
     const fnNumber = ref.querySelector('a')?.textContent?.trim();
 
-    // Container: insert after the closest block-level ancestor
     const parentBlock = ref.closest('p, li, blockquote') || ref.parentElement;
     let expand = parentBlock.nextElementSibling;
+    if (expand && !expand.classList.contains('fn-inline-expand')) expand = null;
 
-    // Find an expansion block already belonging to this paragraph
-   let expand = parentBlock.nextElementSibling;
-   if (expand && !expand.classList.contains('fn-inline-expand')) expand = null;
-
-   const alreadyOpen = expand && expand.dataset.fnId === refId;
-
-   // Close all open expansions
-   document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
-
-   if (!alreadyOpen) {
-   expand = document.createElement('div');
-   expand.className = 'fn-inline-expand open';
-   expand.dataset.fnId = refId;
-   expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
-   parentBlock.insertAdjacentElement('afterend', expand);
- }
-	  
-  });
+    const alreadyOpen = expand && expand.dataset.fnId === refId;
+      
+      // On resize to desktop, restore hrefs and remove any open expansions
+window.addEventListener('resize', () => {
+  if (!isMobile()) {
+    document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+    document.querySelectorAll('.fn-ref a').forEach(a => {
+      if (a.dataset.href) {
+        a.setAttribute('href', a.dataset.href);
+        delete a.dataset.href;
+      }
+    });
+  } else {
+    document.querySelectorAll('.fn-ref a').forEach(a => {
+      if (a.getAttribute('href')) {
+        a.dataset.href = a.getAttribute('href');
+        a.removeAttribute('href');
+      }
+    });
+  }
 });
+
+    document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+
+    if (!alreadyOpen) {
+      expand = document.createElement('div');
+      expand.className = 'fn-inline-expand open';
+      expand.dataset.fnId = refId;
+      expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
+      parentBlock.insertAdjacentElement('afterend', expand);
+    }
+  });
+
+});	
+  
 </script>
 </body>
 </html>
