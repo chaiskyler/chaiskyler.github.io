@@ -810,19 +810,23 @@ document.querySelectorAll('.fn-ref').forEach(ref => {
     const parentBlock = ref.closest('p, li, blockquote') || ref.parentElement;
     let expand = parentBlock.nextElementSibling;
 
-    if (expand && expand.classList.contains('fn-inline-expand')) {
-      // Toggle if tapping same ref again
-      expand.classList.toggle('open');
-    } else {
-      // Close any other open expansions
-      document.querySelectorAll('.fn-inline-expand.open').forEach(el => {
-        el.classList.remove('open');
-      });
-      expand = document.createElement('div');
-      expand.className = 'fn-inline-expand open';
-      expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
-      parentBlock.insertAdjacentElement('afterend', expand);
-    }
+    // Find an expansion block already belonging to this paragraph
+   let expand = parentBlock.nextElementSibling;
+   if (expand && !expand.classList.contains('fn-inline-expand')) expand = null;
+
+   const alreadyOpen = expand && expand.dataset.fnId === refId;
+
+   // Close all open expansions
+   document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+
+   if (!alreadyOpen) {
+   expand = document.createElement('div');
+   expand.className = 'fn-inline-expand open';
+   expand.dataset.fnId = refId;
+   expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
+   parentBlock.insertAdjacentElement('afterend', expand);
+ }
+	  
   });
 });
 </script>
