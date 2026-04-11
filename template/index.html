@@ -479,7 +479,7 @@
       bottom: calc(100% + 6px);
       left: 50%;
       transform: translateX(-50%);
-      width: 300px;
+      width: 400px;
       max-width: calc(100vw - 16px);
       background: var(--surface);
       border: 1px solid var(--border);
@@ -599,6 +599,42 @@
       }
       .topbar, .toggle-wrap { display: none; }
     }
+
+/* ── Mobile footnote drawer ──────────────────────────────── */
+@media (max-width: 768px) {
+  /* Suppress the hover tooltip on mobile entirely */
+  .fn-ref .fn-tooltip {
+    display: none !important;
+  }
+
+  /* Inline footnote expansion */
+  .fn-inline-expand {
+    display: none;
+    margin: 1rem 0 0.5rem 0;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 16px;
+    line-height: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .fn-inline-expand.open {
+    display: block;
+  }
+
+  .fn-inline-expand-number {
+    font-family: "Playfair Display", serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+}  
   </style>
   <script>
     (function() {
@@ -738,22 +774,55 @@ umbralclarity.com
     btn.setAttribute('aria-expanded', open);
   }
 
-  /* Footnote tooltip edge detection — nudge left/right if near viewport edge */
-  document.querySelectorAll('.fn-ref').forEach(ref => {
+  /* Footnote behavior: hover tooltip on desktop, inline expansion on mobile */
+const isMobile = () => window.innerWidth <= 768;
+
+document.querySelectorAll('.fn-ref').forEach(ref => {
+  // Desktop: tooltip edge detection (unchanged)
   ref.addEventListener('mouseenter', () => {
+    if (isMobile()) return;
     const tip = ref.querySelector('.fn-tooltip');
     if (!tip) return;
     ref.classList.remove('tip-left', 'tip-right');
-
-    // Briefly make it visible to measure actual rendered width
     tip.style.display = 'block';
     const tw = tip.offsetWidth;
     tip.style.display = '';
-
     const r = ref.getBoundingClientRect();
     const vw = window.innerWidth;
     if (r.left + r.width / 2 - tw / 2 < 8) ref.classList.add('tip-left');
     else if (r.left + r.width / 2 + tw / 2 > vw - 8) ref.classList.add('tip-right');
+  });
+
+  // Mobile: tap to expand inline
+  ref.addEventListener('click', e => {
+    if (!isMobile()) return;
+    e.preventDefault();
+
+    // Find or create the inline expansion block, inserted after the parent <p>
+    const refId = ref.querySelector('a')?.getAttribute('href')?.replace('#', '');
+    const fnEl = refId ? document.getElementById(refId) : null;
+    const fnText = fnEl
+      ? fnEl.childNodes[0]?.textContent?.trim()
+      : ref.querySelector('.fn-tooltip')?.textContent?.trim();
+    const fnNumber = ref.querySelector('a')?.textContent?.trim();
+
+    // Container: insert after the closest block-level ancestor
+    const parentBlock = ref.closest('p, li, blockquote') || ref.parentElement;
+    let expand = parentBlock.nextElementSibling;
+
+    if (expand && expand.classList.contains('fn-inline-expand')) {
+      // Toggle if tapping same ref again
+      expand.classList.toggle('open');
+    } else {
+      // Close any other open expansions
+      document.querySelectorAll('.fn-inline-expand.open').forEach(el => {
+        el.classList.remove('open');
+      });
+      expand = document.createElement('div');
+      expand.className = 'fn-inline-expand open';
+      expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
+      parentBlock.insertAdjacentElement('afterend', expand);
+    }
   });
 });
 </script>
