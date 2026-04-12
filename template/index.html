@@ -27,7 +27,7 @@
       --quote:         red;
       --code-bg:       #EEE;
       --max-width:     925px;
-      --gutter:        clamp(0.5rem, 2.5vw, 3rem);
+      --gutter:        clamp(0.5rem, 3vw, 3rem);
     }
 
     [data-theme="dark"] {
@@ -538,6 +538,9 @@
     color: var(--hover) !important;
 	transition: color 0.2s ease-in-out;
     }
+	.fn-ref {
+    -webkit-tap-highlight-color: transparent;
+    }
   }
 
     /* ── PDF dropdown ────────────────────────────────────────── */
@@ -858,6 +861,7 @@ window.addEventListener('resize', () => {
 
     document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
 	document.querySelectorAll('.fn-ref.active').forEach(el => el.classList.remove('active'));
+    ref.blur();
 
     if (!alreadyOpen) {
       expand = document.createElement('div');
