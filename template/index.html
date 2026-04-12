@@ -841,8 +841,8 @@ document.querySelectorAll('.fn-ref').forEach(ref => {
 const refId = (a?.dataset.href || a?.getAttribute('href') || '').replace('#', '');
     const fnEl = refId ? document.getElementById(refId) : null;
     const fnText = fnEl
-      ? fnEl.childNodes[0]?.textContent?.trim()
-      : ref.querySelector('.fn-tooltip')?.textContent?.trim();
+    ? fnEl.innerHTML.replace(/<a[^>]*aria-label="Return to text"[^>]*>↑<\/a>/i, '').trim()
+    : ref.querySelector('.fn-tooltip')?.innerHTML?.trim();
     const fnNumber = ref.querySelector('a')?.textContent?.trim();
 
     const parentBlock = ref.closest('p, li, blockquote') || ref.parentElement;
