@@ -528,6 +528,16 @@
     .fn-ref.tip-right .fn-tooltip::after,
     .fn-ref.tip-right .fn-tooltip::before { left: auto; right: 20px; transform: none; }
 
+
+	@media (max-width: 768px) {
+    .fn-ref.active {
+    color: var(--hover);
+    }
+    .fn-ref.active a {
+    color: var(--hover) !important;
+    }
+  }
+
     /* ── PDF dropdown ────────────────────────────────────────── */
     .pdf-toggle {
       font-family: "Playfair Display", serif;
@@ -845,6 +855,7 @@ window.addEventListener('resize', () => {
 });
 
     document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+	document.querySelectorAll('.fn-ref.active').forEach(el => el.classList.remove('active'));
 
     if (!alreadyOpen) {
       expand = document.createElement('div');
@@ -852,6 +863,7 @@ window.addEventListener('resize', () => {
       expand.dataset.fnId = refId;
       expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
       parentBlock.insertAdjacentElement('afterend', expand);
+	  ref.classList.add('active');
     }
   });
 
