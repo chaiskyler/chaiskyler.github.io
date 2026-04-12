@@ -530,18 +530,30 @@
 
 
 	@media (max-width: 768px) {
-    .fn-ref.active {
-    color: var(--hover);
-	transition: color 0.2s ease-in-out;
-    }
-    .fn-ref.active a {
-    color: var(--hover) !important;
-	transition: color 0.2s ease-in-out;
-    }
-	.fn-ref {
+  .fn-ref {
     -webkit-tap-highlight-color: transparent;
-    }
   }
+  /* Disable hover/focus color changes on mobile — active class handles it instead */
+  .fn-ref:hover,
+  .fn-ref:focus,
+  .fn-ref:focus-within {
+    color: var(--link);
+  }
+  .fn-ref:hover a,
+  .fn-ref:focus a,
+  .fn-ref:focus-within a {
+    color: var(--accent) !important;
+  }
+  /* Active state when expansion is open */
+  .fn-ref.active {
+    color: var(--hover);
+    transition: color 0.2s ease-in-out;
+  }
+  .fn-ref.active a {
+    color: var(--hover) !important;
+    transition: color 0.2s ease-in-out;
+  }
+}
 
     /* ── PDF dropdown ────────────────────────────────────────── */
     .pdf-toggle {
@@ -861,7 +873,6 @@ window.addEventListener('resize', () => {
 
     document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
 	document.querySelectorAll('.fn-ref.active').forEach(el => el.classList.remove('active'));
-    ref.blur();
 
     if (!alreadyOpen) {
       expand = document.createElement('div');
