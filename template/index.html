@@ -455,13 +455,14 @@
     .fn-ref {
   position: relative;
   display: inline;
-  vertical-align: super;
+  vertical-align: baseline;
   font-size: 0.65em;
   font-weight: 650;
   padding-right: 1px;
   padding-left: 1px;
   color: var(--link);
   text-decoration: none !important;
+  line-height: 0;
 }
 
 @media (max-width: 600px) {
@@ -476,6 +477,8 @@
     color: var(--accent) !important;
     text-decoration: none !important;
     cursor: default;
+    position: relative;
+    top: -0.4em;
 }
     .fn-ref a:hover {
      color: var(--hover) !important;
