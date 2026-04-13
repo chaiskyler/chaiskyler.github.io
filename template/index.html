@@ -453,23 +453,22 @@
 
     /* ── Footnote tooltip ────────────────────────────────────── */
     .fn-ref {
-    position: relative;
-    display: inline-block;
-    vertical-align: baseline;
-    font-size: 0.65em;
-    top: -0.4em;
-    font-weight: 650;
-    padding-right: 1px;
-    padding-left: 1px;
-    color: var(--link);
-    text-decoration: none !important;
+  position: relative;
+  display: inline;
+  vertical-align: super;
+  font-size: 0.65em;
+  font-weight: 650;
+  padding-right: 1px;
+  padding-left: 1px;
+  color: var(--link);
+  text-decoration: none !important;
 }
-	  
-	@media (max-width: 600px) {
-  	.fn-ref {
-   	font-size: 0.55em;
+
+@media (max-width: 600px) {
+  .fn-ref {
+    font-size: 0.55em;
     font-weight: 700;
-  	}
+  }
 }
 	  
     .fn-ref a {
