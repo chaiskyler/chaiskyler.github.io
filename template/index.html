@@ -467,7 +467,7 @@
 
 @media (max-width: 600px) {
   .fn-ref {
-    font-size: 0.55em;
+    font-size: 0.65em;
     font-weight: 700;
   }
 }
@@ -588,6 +588,17 @@
      color: var(--hover);
      transition: color 0.2s ease-in-out;
      }
+
+	      /* On mobile, suppress hover color; use .active class instead */
+    @media (max-width: 768px) {
+      .pdf-toggle:hover {
+        color: var(--accent);
+      }
+      .pdf-toggle.active {
+        color: var(--hover);
+        transition: color 0.2s ease-in-out;
+      }
+    }
 
     .pdf-toggle .pdf-caret {
       display: inline-block;
@@ -809,11 +820,15 @@ umbralclarity.com
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
   });
 
-  function togglePdf() {
+    function togglePdf() {
     const btn = document.getElementById('pdf-toggle');
     const links = document.getElementById('pdf-links');
     const open = links.classList.toggle('open');
     btn.setAttribute('aria-expanded', open);
+    // Mirror fn-ref pattern: .active only when open, on mobile
+    if (window.innerWidth <= 768) {
+      btn.classList.toggle('active', open);
+    }
   }
 
   /* Footnote behavior: hover tooltip on desktop, inline expansion on mobile */
@@ -863,7 +878,7 @@ const refId = (a?.dataset.href || a?.getAttribute('href') || '').replace('#', ''
 
     const alreadyOpen = expand && expand.dataset.fnId === refId;
       
-      // On resize to desktop, restore hrefs and remove any open expansions
+            // On resize to desktop, restore hrefs and remove any open expansions
 window.addEventListener('resize', () => {
   if (!isMobile()) {
     document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
@@ -873,6 +888,8 @@ window.addEventListener('resize', () => {
         delete a.dataset.href;
       }
     });
+    // Also clear pdf-toggle active state on resize to desktop
+    document.getElementById('pdf-toggle').classList.remove('active');
   } else {
     document.querySelectorAll('.fn-ref a').forEach(a => {
       if (a.getAttribute('href')) {
