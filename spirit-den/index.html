@@ -113,7 +113,7 @@
     position: relative;
     overflow: hidden;
     transition: border-color 0.2s ease;
-    background: #000;
+    background: var(--bg);
   }
   .post-card:hover { border-color: var(--border-hover); }
 
@@ -278,7 +278,7 @@
   }
   #lb-close:hover { color: var(--fg); }
   #lb-content {
-    padding: 36px 32px 28px;
+    padding: 28px 28px 28px;
   }
   #lb-content img {
     display: block;
@@ -349,6 +349,9 @@
   .masonry { columns: 2; }
   .col-pagination { justify-content: flex-end; }
   #topbar { gap: 10px; }
+
+    #lb-content {
+    padding: 15px 15px 15px;
 
   #lb-nav {
     display: flex;
