@@ -534,54 +534,47 @@ function renderCards(items, masonryEl, onCardClick) {
     const realTitle = item.title && !bodyText.startsWith(item.title.slice(0, 40))
       ? item.title : '';
 
-    if (hasImages && !realTitle && bodyText.length < 30) {
-      card.className = 'post-card type-image';
-      const img = document.createElement('img');
-      img.src = item.imgs[0].src;
-      img.alt = '';
-      img.loading = 'lazy';
-      card.appendChild(img);
-    } else if (!hasImages) {
-      card.className = 'post-card type-text';
-      if (realTitle) {
-        const t = document.createElement('div');
-        t.className = 'post-title';
-        t.textContent = realTitle;
-        card.appendChild(t);
-      }
-      const body = document.createElement('div');
-      body.className = 'post-body';
-      const tmp2 = document.createElement('div');
-tmp2.innerHTML = item.rawHtml;
-tmp2.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
-body.innerHTML = tmp2.innerHTML;
-      card.appendChild(body);
-    } else {
-      card.className = 'post-card type-other';
-      const img = document.createElement('img');
-      img.src = item.imgs[0].src;
-      img.alt = '';
-      img.loading = 'lazy';
-      img.style.cssText = 'width:100%;height:auto;display:block;';
-      card.appendChild(img);
-      if (realTitle) {
-        const t = document.createElement('div');
-        t.className = 'post-title';
-        t.style.cssText = 'padding: 10px 12px 0;';
-        t.textContent = realTitle;
-        card.appendChild(t);
-      }
-      if (bodyText.length > 30) {
+  if (hasImages) {
+  card.className = 'post-card type-other';
+  const img = document.createElement('img');
+  img.src = item.imgs[0].src;
+  img.alt = '';
+  img.loading = 'lazy';
+  img.style.cssText = 'width:100%;height:auto;display:block;';
+  card.appendChild(img);
+  if (realTitle) {
+    const t = document.createElement('div');
+    t.className = 'post-title';
+    t.style.cssText = 'padding: 10px 12px 0;';
+    t.textContent = realTitle;
+    card.appendChild(t);
+  }
+  if (bodyText.length > 10) {
+    const body = document.createElement('div');
+    body.className = 'post-body';
+    body.style.cssText = 'padding: 6px 12px 0;';
+    const tmp3 = document.createElement('div');
+    tmp3.innerHTML = item.rawHtml;
+    tmp3.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
+    body.innerHTML = tmp3.innerHTML;
+    card.appendChild(body);
+  }
+} else {
+  card.className = 'post-card type-text';
+  if (realTitle) {
+    const t = document.createElement('div');
+    t.className = 'post-title';
+    t.textContent = realTitle;
+    card.appendChild(t);
+  }
   const body = document.createElement('div');
   body.className = 'post-body';
-  body.style.cssText = 'padding: 6px 12px 0;';
-  const tmp3 = document.createElement('div');
-  tmp3.innerHTML = item.rawHtml;
-  tmp3.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
-  body.innerHTML = tmp3.innerHTML;
+  const tmp2 = document.createElement('div');
+  tmp2.innerHTML = item.rawHtml;
+  tmp2.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
+  body.innerHTML = tmp2.innerHTML;
   card.appendChild(body);
 }
-    }
 
     if (item.date) {
       const meta = document.createElement('div');
