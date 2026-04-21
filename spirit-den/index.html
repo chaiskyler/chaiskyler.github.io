@@ -29,9 +29,13 @@
     color: var(--fg);
     font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 18px;
-    transition: background 0.2s, color 0.2s;
     -webkit-font-smoothing: antialiased;
-    animation: fadein 0.8s ease-out;
+  }
+  
+    body.preload { opacity: 0; }
+    body.loaded  { 
+       opacity: 1; 
+       transition: opacity 1.0s ease-out;
   }
 
   /* ── TOPBAR ── */
@@ -393,6 +397,7 @@
 </style>
 </head>
 <body>
+<body class="preload">
 
 <!-- CONFIG: edit these -->
 <script>
@@ -451,6 +456,12 @@
 </div>
 
 <script>
+
+window.addEventListener('load', () => {
+  document.body.classList.remove('preload');
+  document.body.classList.add('loaded');
+});
+
 // ── INIT TOPBAR ──────────────────────────────────────────────
 (function() {
   const logoEl = document.getElementById('logo');
