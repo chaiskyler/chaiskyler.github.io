@@ -31,11 +31,11 @@
     font-size: 18px;
     -webkit-font-smoothing: antialiased;
   }
-  
-    body.preload { opacity: 0; }
-    body.loaded  { 
-       opacity: 1; 
-       transition: opacity 1.0s ease-out;
+
+  body.preload { opacity: 0; }
+  body.loaded {
+    opacity: 1;
+    transition: opacity 1.0s ease-out;
   }
 
   /* ── TOPBAR ── */
@@ -121,7 +121,6 @@
   }
   .post-card:hover { border-color: var(--border-hover); }
 
-  /* image posts */
   .post-card.type-image img {
     display: block;
     width: 100%;
@@ -129,7 +128,6 @@
     object-fit: contain;
   }
 
-  /* text posts */
   .post-card.type-text {
     padding: 10px 10px 2px;
   }
@@ -150,12 +148,11 @@
     -webkit-box-orient: vertical;
   }
 
-.post-card.type-text .post-body i,
-.post-card.type-text .post-body em {
-  font-style: italic;
-}
+  .post-card.type-text .post-body i,
+  .post-card.type-text .post-body em {
+    font-style: italic;
+  }
 
-  /* mixed/video/etc */
   .post-card.type-other {
     padding: 10px 10px 2px;
   }
@@ -233,7 +230,6 @@
   }
   .pg-input.visible { display: inline-block; }
 
-  /* loading / error */
   .feed-state {
     padding: 40px 20px;
     text-align: center;
@@ -317,105 +313,93 @@
     text-align: right;
   }
 
-#lb-prev, #lb-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: var(--fg-dim);
-  font-size: 28px;
-  cursor: pointer;
-  z-index: 101;
-  padding: 16px;
-  transition: color 0.15s;
-  line-height: 1;
-}
-#lb-prev:hover, #lb-next:hover { color: var(--fg); }
-#lb-prev:disabled, #lb-next:disabled { opacity: 0.15; cursor: default; }
-#lb-prev { left: 12px; }
-#lb-next { right: 12px; }
+  #lb-prev, #lb-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--fg-dim);
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 101;
+    padding: 16px;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+  #lb-prev:hover, #lb-next:hover { color: var(--fg); }
+  #lb-prev:disabled, #lb-next:disabled { opacity: 0.15; cursor: default; }
+  #lb-prev { left: 12px; }
+  #lb-next { right: 12px; }
 
   /* ── MOBILE ── */
   @media (max-width: 700px) {
-  html, body { overflow: auto; height: auto; }
-  #body { flex-direction: column; height: auto; overflow: visible; }
-  .column {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    height: auto;
-    overflow: visible;
-  }
-  .col-scroll {
-    overflow: visible;
-    height: auto;
-    padding: 16px 12px 8px;
-  }
-  .masonry { 
-    columns: 2;
-    column-gap: 0px;
-  }
-  .col-pagination { justify-content: flex-end; }
-  #topbar { gap: 10px; }
+    html, body { overflow: auto; height: auto; }
+    #body { flex-direction: column; height: auto; overflow: visible; }
+    .column {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      height: auto;
+      overflow: visible;
+    }
+    .col-scroll {
+      overflow: visible;
+      height: auto;
+      padding: 16px 12px 8px;
+    }
+    .masonry {
+      columns: 2;
+      column-gap: 0px;
+    }
+    .col-pagination { justify-content: flex-end; }
+    #topbar { gap: 10px; }
 
-    .post-card.type-text .post-body {
-    font-size: 14px;
- }
+    .post-card.type-text .post-body { font-size: 14px; }
 
-    #lb-content {
-    padding: 18px 18px 18px;
- }
-    
-  #lb-nav {
-    display: flex;
-    justify-content: space-between;
-    width: 92vw;
-    padding: 4px 0;
-  }
-      
-  #lb-content .lb-body {
-  font-size: 14px;
-  }
-    
-  #lb-prev, #lb-next {
-    position: static;
-    transform: none;
-    top: auto; left: auto; right: auto;
-    font-size: 22px;
-    padding: 25px 16px;
-  }
-  #lightbox {
-    flex-direction: column;
-    align-items: center;
-  }
-  #lb-inner {
-    max-height: 70vh;
-    width: 92vw;
-    margin-top: 40px;
-  }
-  
-}
-  
+    #lb-content { padding: 18px 18px 18px; }
 
+    #lb-nav {
+      display: flex;
+      justify-content: space-between;
+      width: 92vw;
+      padding: 4px 0;
+    }
+
+    #lb-content .lb-body { font-size: 14px; }
+
+    #lb-prev, #lb-next {
+      position: static;
+      transform: none;
+      top: auto; left: auto; right: auto;
+      font-size: 22px;
+      padding: 25px 16px;
+    }
+    #lightbox {
+      flex-direction: column;
+      align-items: center;
+    }
+    #lb-inner {
+      max-height: 70vh;
+      width: 92vw;
+      margin-top: 40px;
+    }
+  }
 </style>
 </head>
-<body>
 <body class="preload">
 
-<!-- CONFIG: edit these -->
 <script>
   const CONFIG = {
-    logoSrc: 'https://images.squarespace-cdn.com/content/v1/65c69f2e6eb8ad565f5d45f1/33d63755-2f5b-4f4a-9615-8608b9c3b6ea/Untitled+design.png',           // URL to logo image, or leave blank for text fallback
-    logoText: '◎',        // fallback if no logoSrc
-    brandUrl: 'umbralclarity.com',
+    logoSrc:   'https://images.squarespace-cdn.com/content/v1/65c69f2e6eb8ad565f5d45f1/33d63755-2f5b-4f4a-9615-8608b9c3b6ea/Untitled+design.png',
+    logoText:  '◎',
+    brandUrl:  'umbralclarity.com',
     siteTitle: 'spirit den',
-    leftFeed:  'https://spiritden777.tumblr.com/tagged/text/rss',
-    rightFeed: 'https://spiritden777.tumblr.com/tagged/image/rss',
-    // CORS proxy — required for cross-origin RSS fetch from GitHub Pages.
-    // Options: 'https://api.allorigins.win/raw?url=' (free, rate-limited)
-    //          'https://corsproxy.io/?'              (free)
-    //          ''  if you host your own proxy or use a backend
-    corsProxy: 'https://circuitfetcher.chaiskyler.workers.dev/?url=',
+    blogName:  'spiritden777',
+    apiKey:    'uYUWxqEaBsfh7He1OA40Td2UisA4DEKwQ3k451GvVwRGJq14BZ',
+    limit:     20,
+    // Left column tag, right column tag
+    leftTag:   'text',
+    rightTag:  'image',
   };
 </script>
 
@@ -430,18 +414,14 @@
     <div class="col-scroll" id="scroll-left">
       <div class="masonry" id="masonry-left"></div>
     </div>
-    <div class="col-pagination" id="pg-left">
-      <!-- injected by JS -->
-    </div>
+    <div class="col-pagination" id="pg-left"></div>
   </div>
 
   <div class="column" id="col-right">
     <div class="col-scroll" id="scroll-right">
       <div class="masonry" id="masonry-right"></div>
     </div>
-    <div class="col-pagination" id="pg-right">
-      <!-- injected by JS -->
-    </div>
+    <div class="col-pagination" id="pg-right"></div>
   </div>
 </div>
 
@@ -465,7 +445,7 @@ window.addEventListener('load', () => {
   document.body.classList.add('loaded');
 });
 
-// ── INIT TOPBAR ──────────────────────────────────────────────
+// ── TOPBAR ───────────────────────────────────────────────────
 (function() {
   const logoEl = document.getElementById('logo');
   if (CONFIG.logoSrc) {
@@ -477,38 +457,90 @@ window.addEventListener('load', () => {
   document.title = CONFIG.siteTitle;
 })();
 
-// ── RSS PARSER ───────────────────────────────────────────────
-async function fetchFeed(url) {
-  const proxyUrl = CONFIG.corsProxy
-    ? CONFIG.corsProxy + encodeURIComponent(url)
-    : url;
-  const res = await fetch(proxyUrl);
+// ── TUMBLR API v2 FETCH ───────────────────────────────────────
+async function fetchPosts(tag, offset) {
+  const url = `https://api.tumblr.com/v2/blog/${CONFIG.blogName}.tumblr.com/posts`
+    + `?tag=${encodeURIComponent(tag)}`
+    + `&limit=${CONFIG.limit}`
+    + `&offset=${offset}`
+    + `&npf=false`
+    + `&api_key=${CONFIG.apiKey}`;
+
+  const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const text = await res.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(text, 'application/xml');
-  const parserError = doc.querySelector('parsererror');
-  if (parserError) throw new Error('XML parse error');
-  return doc;
+  const json = await res.json();
+  if (json.meta && json.meta.status >= 400) throw new Error(json.meta.msg || 'API error');
+  return json.response; // { posts: [...], total_posts: N }
 }
 
-function parseItems(xmlDoc) {
-  return Array.from(xmlDoc.querySelectorAll('item')).map(item => {
-    const title   = item.querySelector('title')?.textContent?.trim() || '';
-    const pubDate = item.querySelector('pubDate')?.textContent?.trim() || '';
-    const desc    = item.querySelector('description')?.textContent?.trim() || '';
-    const link    = item.querySelector('link')?.textContent?.trim() || '';
+// ── NORMALISE API POST → item shape ──────────────────────────
+function normalisePost(post) {
+  const date = post.date ? formatDate(new Date(post.date)) : '';
 
-    // Parse description HTML for images
+  // Build rawHtml and imgs depending on post type
+  let rawHtml = '';
+  let imgs = [];
+  let title = post.summary || '';
+
+  switch (post.type) {
+    case 'photo': {
+      // caption is the text body; photos array has image urls
+      rawHtml = post.caption || '';
+      imgs = (post.photos || []).map(p => ({ src: p.original_size.url }));
+      title = '';
+      break;
+    }
+    case 'text': {
+      rawHtml = post.body || '';
+      title   = post.title || '';
+      break;
+    }
+    case 'quote': {
+      rawHtml = `<p>${post.text || ''}</p><p><em>— ${post.source || ''}</em></p>`;
+      title   = '';
+      break;
+    }
+    case 'link': {
+      rawHtml = `<p><a href="${post.url}">${post.title || post.url}</a></p>${post.description || ''}`;
+      title   = post.title || '';
+      break;
+    }
+    case 'chat': {
+      rawHtml = (post.dialogue || []).map(d => `<p><strong>${d.label}</strong> ${d.phrase}</p>`).join('');
+      title   = post.title || '';
+      break;
+    }
+    case 'audio': {
+      rawHtml = post.caption || '';
+      title   = post.track_name || post.artist || '';
+      break;
+    }
+    case 'video': {
+      rawHtml = post.caption || '';
+      // embed the player HTML if available
+      const player = post.player && post.player.length
+        ? post.player[post.player.length - 1].embed_code || ''
+        : '';
+      if (player) rawHtml = player + rawHtml;
+      break;
+    }
+    default: {
+      rawHtml = post.caption || post.body || '';
+      break;
+    }
+  }
+
+  // Fallback: extract imgs from body HTML.
+  // Tumblr returns NPF posts as type:"text" with images embedded in body.
+  if (imgs.length === 0 && rawHtml) {
     const tmp = document.createElement('div');
-    tmp.innerHTML = desc;
-    const imgs = Array.from(tmp.querySelectorAll('img'))
-      .filter(i => !i.src.includes('avatar') && i.width !== 1);
+    tmp.innerHTML = rawHtml;
+    imgs = Array.from(tmp.querySelectorAll('img'))
+      .filter(i => i.src && !i.src.includes('avatar'))
+      .map(i => ({ src: i.src }));
+  }
 
-    const date = pubDate ? formatDate(new Date(pubDate)) : '';
-
-    return { title, pubDate, date, desc, link, imgs, rawHtml: desc };
-  });
+  return { title, date, rawHtml, imgs, link: post.post_url || '' };
 }
 
 function formatDate(d) {
@@ -529,55 +561,52 @@ function renderCards(items, masonryEl, onCardClick) {
   items.forEach((item, idx) => {
     const card = document.createElement('div');
     const hasImages = item.imgs.length > 0;
-    const hasText = item.title || stripTags(item.rawHtml).trim().length > 10;
 
-    // Tumblr RSS echoes body text into <title> for untitled posts.
-    // Only treat as a real title if it doesn't appear verbatim at the start of the body.
     const bodyText = stripTags(item.rawHtml).trim();
     const realTitle = item.title && !bodyText.startsWith(item.title.slice(0, 40))
       ? item.title : '';
 
-  if (hasImages) {
-  card.className = 'post-card type-other';
-  const img = document.createElement('img');
-  img.src = item.imgs[0].src;
-  img.alt = '';
-  img.loading = 'lazy';
-  img.style.cssText = 'width:100%;height:auto;display:block;';
-  card.appendChild(img);
-  if (realTitle) {
-    const t = document.createElement('div');
-    t.className = 'post-title';
-    t.style.cssText = 'padding: 10px 12px 0;';
-    t.textContent = realTitle;
-    card.appendChild(t);
-  }
-  if (bodyText.length > 10) {
-    const body = document.createElement('div');
-    body.className = 'post-body';
-    body.style.cssText = 'padding: 6px 12px 0;';
-    const tmp3 = document.createElement('div');
-    tmp3.innerHTML = item.rawHtml;
-    tmp3.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
-    body.innerHTML = tmp3.innerHTML;
-    card.appendChild(body);
-  }
-} else {
-  card.className = 'post-card type-text';
-  if (realTitle) {
-    const t = document.createElement('div');
-    t.className = 'post-title';
-    t.textContent = realTitle;
-    card.appendChild(t);
-  }
-  const body = document.createElement('div');
-  body.className = 'post-body';
-  const tmp2 = document.createElement('div');
-  tmp2.innerHTML = item.rawHtml;
-  tmp2.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
-  body.innerHTML = tmp2.innerHTML;
-  card.appendChild(body);
-}
+    if (hasImages) {
+      card.className = 'post-card type-other';
+      const img = document.createElement('img');
+      img.src = item.imgs[0].src;
+      img.alt = '';
+      img.loading = 'lazy';
+      img.style.cssText = 'width:100%;height:auto;display:block;';
+      card.appendChild(img);
+      if (realTitle) {
+        const t = document.createElement('div');
+        t.className = 'post-title';
+        t.style.cssText = 'padding: 10px 12px 0;';
+        t.textContent = realTitle;
+        card.appendChild(t);
+      }
+      if (bodyText.length > 10) {
+        const body = document.createElement('div');
+        body.className = 'post-body';
+        body.style.cssText = 'padding: 6px 12px 0;';
+        const tmp = document.createElement('div');
+        tmp.innerHTML = item.rawHtml;
+        tmp.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
+        body.innerHTML = tmp.innerHTML;
+        card.appendChild(body);
+      }
+    } else {
+      card.className = 'post-card type-text';
+      if (realTitle) {
+        const t = document.createElement('div');
+        t.className = 'post-title';
+        t.textContent = realTitle;
+        card.appendChild(t);
+      }
+      const body = document.createElement('div');
+      body.className = 'post-body';
+      const tmp = document.createElement('div');
+      tmp.innerHTML = item.rawHtml;
+      tmp.querySelectorAll('img, figure, iframe, video, a').forEach(el => el.remove());
+      body.innerHTML = tmp.innerHTML;
+      card.appendChild(body);
+    }
 
     if (item.date) {
       const meta = document.createElement('div');
@@ -637,7 +666,10 @@ function renderPagination(pgEl, state) {
     input.classList.remove('visible');
     sep.style.display = '';
   };
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') commit(); if (e.key === 'Escape') { input.classList.remove('visible'); sep.style.display = ''; } });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') commit();
+    if (e.key === 'Escape') { input.classList.remove('visible'); sep.style.display = ''; }
+  });
   input.addEventListener('blur', commit);
 
   const totalSpan = document.createElement('span');
@@ -651,7 +683,7 @@ function renderPagination(pgEl, state) {
   const nextBtn = document.createElement('button');
   nextBtn.className = 'pg-btn';
   nextBtn.textContent = '→';
-  nextBtn.disabled = state.isLastPage;
+  nextBtn.disabled = state.currentPage >= state.totalPages;
   nextBtn.addEventListener('click', () => state.goTo(state.currentPage + 1));
 
   pgEl.appendChild(prevBtn);
@@ -660,116 +692,59 @@ function renderPagination(pgEl, state) {
 }
 
 // ── FEED CONTROLLER ──────────────────────────────────────────
-// Each pagination click fetches ?page=N from Tumblr directly.
-// totalPages is discovered dynamically: when a fetch returns 0 items,
-// the previous page was the last. We cache fetched pages to avoid
-// redundant requests when navigating back.
-function createFeedController({ feedUrl, masonryId, pgId, scrollId }) {
+function createFeedController({ tag, masonryId, pgId, scrollId }) {
   const masonryEl = document.getElementById(masonryId);
   const pgEl      = document.getElementById(pgId);
   const scrollEl  = document.getElementById(scrollId);
- 
+
   let currentPage = 1;
-  let lastPage    = null;   // set once we hit an empty fetch
+  let totalPages  = null;
   let loading     = false;
-  const cache     = {};     // page number → items array
- 
+  const cache     = {};
+
   async function goTo(page) {
     if (loading) return;
     if (page < 1) return;
-    if (lastPage !== null && page > lastPage) return;
- 
-    // If cached, render immediately
+    if (totalPages !== null && page > totalPages) return;
+
     if (cache[page]) {
       currentPage = page;
       renderCards(cache[page], masonryEl, openLightbox);
       scrollEl.scrollTop = 0;
-      renderPagination(pgEl, {
-        currentPage,
-        totalPages: lastPage,
-        isLastPage: lastPage !== null && currentPage >= lastPage,
-        goTo,
-      });
+      renderPagination(pgEl, { currentPage, totalPages, goTo });
       return;
     }
- 
+
     loading = true;
     masonryEl.innerHTML = '<div class="feed-state">loading…</div>';
- 
-    try {
-      const pagedUrl = feedUrl + `?start=${(page - 1) * 20}`;
-      const xml   = await fetchFeed(pagedUrl);
-      const items = parseItems(xml);
- 
-      const isDuplicate = cache[1] && items.length > 0 &&
-  items[0].link === cache[1][0].link;
 
-if (items.length === 0 || (page > 1 && isDuplicate)) {
-  lastPage = page - 1;
-  currentPage = lastPage;
-  loading = false;
-  renderCards(cache[lastPage], masonryEl, openLightbox);
-  renderPagination(pgEl, {
-    currentPage: lastPage,
-    totalPages: lastPage,
-    isLastPage: true,
-    goTo,
-  });
-  return;
-}
- 
+    try {
+      const offset   = (page - 1) * CONFIG.limit;
+      const response = await fetchPosts(tag, offset);
+      const items    = (response.posts || []).map(normalisePost);
+
+      // Detect last page by result count, not total_posts
+      // (total_posts reflects whole-blog count, not per-tag count)
+      if (items.length < CONFIG.limit) totalPages = page;
       cache[page] = items;
       currentPage = page;
- 
+
       renderCards(items, masonryEl, openLightbox);
       scrollEl.scrollTop = 0;
- 
-      // Peek at next page to see if we're at the end (fire and forget)
-      peekNext(page + 1);
- 
-      renderPagination(pgEl, {
-        currentPage,
-        totalPages: lastPage,
-        isLastPage: lastPage !== null && currentPage >= lastPage,
-        goTo,
-      });
+      renderPagination(pgEl, { currentPage, totalPages, goTo });
     } catch(e) {
-      masonryEl.innerHTML = `<div class="feed-state error">failed to load feed<br><small>${e.message}</small></div>`;
+      masonryEl.innerHTML = `<div class="feed-state error">failed to load<br><small>${e.message}</small></div>`;
       console.error(e);
     }
- 
+
     loading = false;
   }
- 
-  async function peekNext(page) {
-  if (lastPage !== null || cache[page]) return;
-  try {
-    const pagedUrl = feedUrl + `?start=${(page - 1) * 20}`;
-    const xml   = await fetchFeed(pagedUrl);
-    const items = parseItems(xml);
 
-    const isDuplicate = cache[1] && items.length > 0 &&
-      items[0].link === cache[1][0].link;
-
-    if (items.length === 0 || (page > 1 && isDuplicate)) {
-      lastPage = page - 1;
-    } else {
-      cache[page] = items;
-    }
-    renderPagination(pgEl, {
-      currentPage,
-      totalPages: lastPage,
-      isLastPage: lastPage !== null && currentPage >= lastPage,
-      goTo,
-    });
-  } catch(_) { /* silent — peek is best-effort */ }
-}
- 
   goTo(1);
 }
 
-// ── LIGHTBOX ──────────────────────────────────────────────────
-const lb      = document.getElementById('lightbox');
+// ── LIGHTBOX ─────────────────────────────────────────────────
+const lb        = document.getElementById('lightbox');
 const lbContent = document.getElementById('lb-content');
 const lbMeta    = document.getElementById('lb-meta');
 
@@ -802,8 +777,17 @@ function renderLightbox(item) {
   const tmp = document.createElement('div');
   tmp.innerHTML = item.rawHtml;
   tmp.querySelectorAll('img').forEach(i => {
-    if (i.width === 1 || i.height === 1) i.remove();
-    else { i.style.maxWidth = '100%'; i.style.height = 'auto'; }
+    if (i.width === 1 || i.height === 1) { i.remove(); return; }
+    // Upgrade to highest-res srcset entry if available
+    const srcset = i.getAttribute('srcset');
+    if (srcset) {
+      const entries = srcset.split(',').map(s => s.trim().split(/\s+/));
+      const best = entries.reduce((a, b) => (parseInt(b[1]) > parseInt(a[1]) ? b : a), entries[0]);
+      if (best && best[0]) i.src = best[0];
+      i.removeAttribute('srcset');
+      i.removeAttribute('sizes');
+    }
+    i.style.cssText = 'width:100%;height:auto;display:block;margin-bottom:12px;';
   });
   body.innerHTML = tmp.innerHTML;
   lbContent.appendChild(body);
@@ -831,19 +815,9 @@ document.addEventListener('keydown', e => {
 });
 
 // ── BOOT ─────────────────────────────────────────────────────
-createFeedController({
-  feedUrl:   CONFIG.leftFeed,
-  masonryId: 'masonry-left',
-  pgId:      'pg-left',
-  scrollId:  'scroll-left',
-});
+createFeedController({ tag: CONFIG.leftTag,  masonryId: 'masonry-left',  pgId: 'pg-left',  scrollId: 'scroll-left'  });
+createFeedController({ tag: CONFIG.rightTag, masonryId: 'masonry-right', pgId: 'pg-right', scrollId: 'scroll-right' });
 
-createFeedController({
-  feedUrl:   CONFIG.rightFeed,
-  masonryId: 'masonry-right',
-  pgId:      'pg-right',
-  scrollId:  'scroll-right',
-});
 </script>
 </body>
 </html>
