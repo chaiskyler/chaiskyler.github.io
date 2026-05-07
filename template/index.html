@@ -541,6 +541,16 @@
     .fn-ref.tip-right .fn-tooltip::after,
     .fn-ref.tip-right .fn-tooltip::before { left: auto; right: 20px; transform: none; }
 
+	  /* Fix for links inside tooltips: reset superscript positioning and font */
+.fn-tooltip a {
+  position: static !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  top: auto !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
 
 	@media (max-width: 768px) {
   .fn-ref {
