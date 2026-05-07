@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vertical Does Not Exist</title>
+  <link rel="icon" type="image/png" href="https://images.squarespace-cdn.com/content/v1/65c69f2e6eb8ad565f5d45f1/33d63755-2f5b-4f4a-9615-8608b9c3b6ea/Untitled+design.png?format=1500w/45x45">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Tokens ───────────────────────────────────────────────── */
+    :root {
+      --bg:            #FFFBED;
+      --surface:       #F5F0E1;
+      --border:        #A65555;
+      --text-primary:  #131330;
+      --text-secondary:#625F78;
+      --text-muted:    #80808A;
+      --accent:        red;
+      --link:          red;
+      --hover:         #385DFF;
+      --toggle-bg:     #D8D4CC;
+      --toggle-knob:   #FAFAF8;
+      --quote:         red;
+      --code-bg:       #EEE;
+      --max-width:     925px;
+      --gutter:        clamp(0.5rem, 2.75vw, 3rem);
+    }
+
+    [data-theme="dark"] {
+      --bg:            #0D0505;
+      --surface:       #120A0A;
+      --border:        #5574A6;
+      --text-primary:  #C7BFBB;
+      --text-secondary:#A09994;
+      --text-muted:    #6A6260;
+      --accent:        #385DFF;
+      --link:          #385DFF;
+      --hover:         red;
+      --toggle-bg:     #333028;
+      --toggle-knob:   #EDEAE4;
+      --quote:         #385DFF;
+      --code-bg:       #252420;
+    }
+
+    /* ── Reset ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: "EB Garamond", serif;
+      font-weight: 400;
+      font-size: 23px;
+      line-height: 1.3em;
+      transition: background 0.2s, color 0.2s;
+      -webkit-font-smoothing: antialiased;
+      animation: fadein 0.8s ease-out;
+    }
+    
+    @media (max-width: 600px) {
+  		body {
+   		font-size: 20px;
+  	  }
+	  }
+    
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── Layout ──────────────────────────────────────────────── */
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem var(--gutter) 1rem;
+    }
+
+    /* ── Topbar ──────────────────────────────────────────────── */
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+     .topbar-brand {
+     font-family: "Playfair Display", serif;
+     font-size: 15px;
+     font-weight: 500;
+     color: var(--link);
+     text-decoration: underline;
+     flex: 1;
+     display: flex;
+     align-items: center;
+     gap: 8px;
+    }
+
+    .topbar-brand:hover { 
+    color: var(--hover);
+    transition: color 0.2s ease-in-out;
+    }
+
+    .topbar-logo { 
+    width: 45px; 
+    height: 45px; 
+    display: block; 
+    flex-shrink: 0;
+    margin-right: 10px;
+    }
+
+    /* ── Toggle ──────────────────────────────────────────────── */
+    .toggle-wrap {
+      display: flex;
+      align-items: right;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .toggle-label {
+      font-family: "Playfair Display", serif;
+      font-size: 15px;
+      align: right;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .toggle {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      background: var(--toggle-bg);
+      border-radius: 11px;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      background: var(--toggle-knob);
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    [data-theme="dark"] .toggle {
+      background: var(--accent);
+    }
+
+    [data-theme="dark"] .toggle::after {
+      transform: translateX(18px);
+    }
+
+    /* ── Cover ───────────────────────────────────────────────── */
+    .cover {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.3em;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .cover-subtitle {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .cover-meta {
+      display: grid; 
+      grid-template-columns: auto 1fr;
+      gap: 1.25rem 2rem;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 15px;
+      color: var(--text-muted);
+      padding-top: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .cover-meta-item strong {
+      display: block;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 2px;
+      padding-bottom: 0.75rem;
+    }
+    
+    .cover-meta-item:last-child {
+    text-align: right;	
+  	}
+
+    /* ── TOC ─────────────────────────────────────────────────── */
+    .toc {
+      margin-bottom: 3.5rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 25px;
+      border: 1px solid var(--border);
+    }
+
+    .toc-title {
+      font-family: "Playfair Display", serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+    }
+
+    .toc ol li {
+      counter-increment: toc;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      font-family: "Playfair Display", serif;;
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 3px 0;
+    }
+
+    .toc ol li::before {
+      content: counter(toc);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      min-width: 16px;
+    }
+
+    .toc ol li a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .toc ol li a:hover {
+      text-decoration: underline;
+      transition: color 0.2s ease-in-out;
+    }
+
+    /* ── Body content ────────────────────────────────────────── */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;;
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+
+    h2.italic-heading {
+      font-style: italic;
+    }
+
+    h3 {
+      font-family: "Playfair Display", serif;;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--text-secondary);
+      margin-top: 1.75rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    p { margin-bottom: 1.2rem; }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-decoration-color: color-mix(in srgb, var(--link) 35%, transparent);
+      text-underline-offset: 3px;
+    }
+
+     a:hover { 
+     color: var(--hover);
+     transition: color 0.2s ease-in-out;
+     }
+    .toc ol li a:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
+    .fn-ref a:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
+    .fn-ref:hover { 
+      color: var(--hover);
+      transition: color 0.2s ease-in-out;
+     }
+
+    .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+    }
+
+    /* ── Callout ─────────────────────────────────────────────── */
+    .callout {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.75rem 0;
+      font-size: 16px;
+      font-family: "Bricolage Grotesque", sans-serif;
+    }
+
+    .callout-label {
+      font-family: "Playfair Display", serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Blockquote ──────────────────────────────────────────── */
+    blockquote {
+      border-left: 3px solid var(--quote);
+      margin: 1.75rem 0;
+      padding: 0.25rem 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    blockquote cite {
+      display: block;
+      font-style: normal;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* ── Code ────────────────────────────────────────────────── */
+    code {
+      font-family: "Courier New", monospace;
+      font-size: 0.85em;
+      background: var(--code-bg);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: var(--text-secondary);
+    }
+
+    pre {
+      background: var(--code-bg);
+      padding: 1.25rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 14px;
+      line-height: 1.6;
+      border: 1px solid var(--border);
+    }
+
+    pre code { background: none; padding: 0; }
+
+    /* ── Relevant Sources ───────────────────────────────────────────── */
+
+  .relevant-sources {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 16px;
+    color: var(--text-muted);
+    line-height: 1.5rem;
+  }
+
+  .relevant-sources-label {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .relevant-sources ul {
+    list-style: none;
+    padding-left: 1.5rem;
+   }
+
+  .relevant-sources li {
+    margin-bottom: 0.5rem;
+   }
+
+  .relevant-sources li::before {
+   content: '— ';
+   color: var(--text-muted);
+   }
+
+    /* ── Footnotes ───────────────────────────────────────────── */
+    .footnotes {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.5rem;
+    }
+
+    .footnotes-label {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .footnotes ol {
+      padding-left: 1.5rem;
+    }
+
+    .footnotes li {
+      margin-bottom: 1.25rem;
+      padding-left: .7em;
+    }
+
+
+
+    /* ── Footnote tooltip ────────────────────────────────────── */
+    .fn-ref {
+  position: relative;
+  display: inline;
+  vertical-align: baseline;
+  font-size: 0.65em;
+  font-weight: 650;
+  padding-right: 1px;
+  padding-left: 1px;
+  color: var(--link);
+  text-decoration: none !important;
+  line-height: 0;
+}
+
+@media (max-width: 600px) {
+  .fn-ref {
+    font-size: 0.65em;
+    font-weight: 700;
+  }
+}
+	  
+    .fn-ref a {
+    font-family: "EB Garamond", serif;
+    color: var(--accent) !important;
+    text-decoration: none !important;
+    cursor: default;
+    position: relative;
+    top: -0.4em;
+}
+    .fn-ref a:hover {
+     color: var(--hover) !important;
+     transition: color 0.2s ease-in-out;
+}
+
+    .fn-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      max-width: calc(100vw - 16px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1rem 1rem;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-size: 16px;
+      line-height: 1.5rem;
+      color: var(--text-secondary);
+      z-index: 100;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .fn-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--border);
+    }
+
+    .fn-tooltip::before {
+      content: '';
+      position: absolute;
+      top: calc(100% - 1px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--surface);
+      z-index: 1;
+    }
+
+    .fn-ref:hover .fn-tooltip,
+    .fn-ref:focus-within .fn-tooltip {
+      display: block;
+    }
+
+    .fn-ref.tip-left .fn-tooltip  { left: 0;    transform: none; }
+    .fn-ref.tip-left .fn-tooltip::after,
+    .fn-ref.tip-left .fn-tooltip::before { left: 20px; transform: none; }
+
+    .fn-ref.tip-right .fn-tooltip  { left: auto; right: 0; transform: none; }
+    .fn-ref.tip-right .fn-tooltip::after,
+    .fn-ref.tip-right .fn-tooltip::before { left: auto; right: 20px; transform: none; }
+      
+      /* Fix for links inside tooltips: reset superscript positioning and font */
+.fn-tooltip a {
+  position: static !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  top: auto !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+      
+	@media (max-width: 768px) {
+  .fn-ref {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Disable hover/focus color changes on mobile — active class handles it instead */
+  .fn-ref:hover,
+  .fn-ref:focus,
+  .fn-ref:focus-within {
+    color: var(--link);
+  }
+  .fn-ref:hover a,
+  .fn-ref:focus a,
+  .fn-ref:focus-within a {
+    color: var(--accent) !important;
+  }
+  /* Active state when expansion is open */
+  .fn-ref.active {
+    color: var(--hover);
+    transition: color 0.2s ease-in-out;
+  }
+  .fn-ref.active a {
+    color: var(--hover) !important;
+    transition: color 0.2s ease-in-out;
+  }
+}
+
+    /* ── PDF dropdown ────────────────────────────────────────── */
+    .pdf-toggle {
+      font-family: "Playfair Display", serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      user-select: none;
+      background: none;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.01em;
+    }
+
+    .pdf-toggle:hover { 
+     color: var(--hover);
+     transition: color 0.2s ease-in-out;
+     }
+
+	      /* On mobile, suppress hover color; use .active class instead */
+    @media (max-width: 768px) {
+      .pdf-toggle:hover {
+        color: var(--accent);
+      }
+      .pdf-toggle.active {
+        color: var(--hover);
+        transition: color 0.2s ease-in-out;
+      }
+    }
+
+    .pdf-toggle .pdf-caret {
+      display: inline-block;
+      font-style: normal;
+      transition: transform 0.18s;
+      font-size: 10px;
+    }
+
+    .pdf-toggle[aria-expanded="true"] .pdf-caret {
+      transform: rotate(90deg);
+    }
+
+    .pdf-links {
+      display: none;
+      margin-top: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pdf-links.open { display: flex; }
+
+    .pdf-btn {
+      font-family: "Playfair Display", serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 3px 10px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .pdf-btn:hover {
+      color: var(--hover);
+      border-color: color: var(--hover);
+      transition: color 0.2s ease-in-out;
+    }
+
+    /* ── Print ───────────────────────────────────────────────── */
+    @media print {
+      [data-theme="dark"] {
+        --bg: #fff;
+        --text-primary: #000;
+        --text-secondary: #333;
+      }
+      .topbar, .toggle-wrap { display: none; }
+    }
+
+/* ── Mobile footnote drawer ──────────────────────────────── */
+@media (max-width: 768px) {
+  /* Suppress the hover tooltip on mobile entirely */
+  .fn-ref .fn-tooltip {
+    display: none !important;
+  }
+
+  /* Inline footnote expansion */
+  .fn-inline-expand {
+    display: none;
+    margin: 1.5rem 0 1.5rem 0;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 16px;
+    line-height: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .fn-inline-expand.open {
+    display: block;
+  }
+
+  .fn-inline-expand-number {
+    font-family: "Playfair Display", serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+}  
+  </style>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+<div class="page">
+
+  <!-- Topbar -->
+  <div class="topbar">
+  <a href="https://www.umbralclarity.com/" target="_blank" rel="noopener noreferrer" class="topbar-brand">
+  <img src="https://images.squarespace-cdn.com/content/v1/65c69f2e6eb8ad565f5d45f1/33d63755-2f5b-4f4a-9615-8608b9c3b6ea/Untitled+design.png?format=1500w/45x45" alt="" class="topbar-logo" />
+umbralclarity.com
+ </a>
+    <div class="toggle-wrap" onclick="toggleTheme()" role="button" aria-label="Toggle dark mode" tabindex="0">
+      <span class="toggle-label" id="toggle-label">Light</span>
+      <div class="toggle" id="toggle" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- Cover -->
+  <div class="cover">
+    <h1>The Vertical Does Not Exist</h1>
+    <p class="cover-subtitle">On Lacan's Seminar XX, Femininity, LSD, Thought &nbsp;// &nbsp;'whether we wish to make use of our being-Spirit'</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <strong>Chai Skyler</strong>
+        <div style="margin-top: 6px;">
+        <button class="pdf-toggle" id="pdf-toggle" aria-expanded="false" onclick="togglePdf()">
+            <i class="pdf-caret">›</i> pdf
+          </button>
+          <div class="pdf-links" id="pdf-links">
+            <a class="pdf-btn" href="the-vertical-does-not-exist-light.pdf" download>light</a>
+            <a class="pdf-btn" href="the-vertical-does-not-exist-dark.pdf" download>dark</a>
+        </div>
+          </div>
+      </div>
+      <div class="cover-meta-item">
+        <strong>07-05-2026</strong>
+    </div>
+  </div>
+</div>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">Contents</div>
+    <ol>
+      <li><a href="#oily-fish">oily fish</a></li>
+      <li><a href="#interlude-i">interlude i.</a></li>
+      <li><a href="#traipsing-downstairs">traipsing downstairs</a></li>
+      <li><a href="#aggressive-constellation">aggressive constellation</a></li>
+      <li><a href="#interlude-ii">interlude ii.</a></li>
+      <li><a href="#the-so-called-cosmological">the so-called 'cosmological'</a></li>
+      <li><a href="#le-vertical"><em>le vertical n'existe pas</em></a></li>
+      <li><a href="#realise-oneself">realise oneself</a></li>
+      <li><a href="#adventure">adventure</a></li>
+    </ol>
+  </nav>
+
+  <!-- Body -->
+  <div class="section" id="oily-fish">
+    <h2>oily fish</h2>
+    <p>Lacan is an oily fish, which is probably why I enjoy reading him. He will talk around a point, take secretly related detours, and then say something insightfully provocative&#8212; but largely only by implication, which you then have to reconstruct or restate for yourself, and which he does not bother to elaborate at all. It as if he does not outwardly display the level at which his own words impress themselves on him, though it is clear that they do. This is frustratingly engaging. And suits well what he often points at: the indication that rather than man speaking language, language speaks man.</p>
+    <p>Seminar XX introduces his idea that categorical Woman does not exist, and that there is no sexual relationship, that is, two subjects cannot meet as no signifier exists to inscribe such a relation. In addition, of course, what Teresa of Ávila experienced, that which she could not speak or inscribe, was bizarre sexual ecstasy, in a mode barred from within the phallic order. Starting with the overall arc of what most amuses me: If we want to say that mystical states are about sexual enjoyment, then I can say that sexual enjoyment is about mystical states. You can demystify mysticism or you can desexualize sexuality. Quoting myself from my private notes:</p>
+    <blockquote>
+      "Sexuality, more precisely sexual fantasy and behavior, is the eye of the storm that is the constitutive basis of the individual. Nor is sexuality really about sex. Sex is simply the most common vehicle of realization that showcases undeniable truths regarding a subject's structural positioning. 'This is the condition by which I attain love-union'; inherent contradiction, as the defining quality of love-union is its unconditionality. A person can be accordingly existentially described, that is described as a finite agent, by the way they have sex. Your sex is a film strip and your life is the film. Authentic tantra understands this and Freud never progressed beyond this, getting stuck in literal sexual images."
+    </blockquote>
+    <p>The confusion begins at the disjoining of 'love' and 'union'. If 'there is no sexual relationship', this reflects that most people have no experience of true union, true meeting with reality qua actuality. Certainly the neurotic does not, as he is personally perpetually non-coinciding with himself, acting against himself behind his own back. It is not quite accurate to speak about 'people' here, when it is for the standing logic of our age that union is an impossibility. However, that does not mean it cannot happen; many people have and continue to experience it; I see it as best practice to afford the impossible all possibility. I have in mind here instances where the Divine Self consciously recognizes and is recognized in an other. This cannot be termed narcissistic as it goes entirely beyond the egos involved, has nothing to do with them though it includes them; if it remains solely on the level of ego (mirror stage) it is not a true union or recognition and the structural impossibility Lacan articulated applies.</p>
+    <p>Lacan 'wants to' escape the whole, rather, cements and drives home its nonexistence for modern subjectivity. That limit is his favorite place to dance. The whole, as the certainty of blissful resolution, is frightening from the plane of positivity and ego, barred-subject or not! That is why everyone constantly defends against it. If there is the whole, then the whole of motion, of any action is put into question. There is no destination to reach, so what is anyone doing? This is a threat to finite identity from which it had ever-quickening fled. Because <em>its realization entails one's own death&#8212; </em>the death of identification with the finite, to be always already beyond oneself. A continuously occurring logical death, continuous self-negation. The whole is not whole by an Imaginary perfect fullness, but by virtue of the depth of its own negativity, absolute negativity, absolute going-under&#8212; further, deeper and higher into itself, ad infinitum. People do not seem to be too keen on this for some reason. Posit the Other as a shield of stability. What remains unfazed: Parmenides and Heraclitus do not contradict.</p>
+    <blockquote>
+      "What is essential? It is, let it be emphasized once more, to die the death as old consciousness. Demands, however, only serve to stabilize the old consciousness, and this is achieved by the fact that the contradictions brought forth by it are forcibly commanded away from behind the green table."
+      <cite>— Giegerich, <em>Animus Psychologie</em>, 295. transl.</cite>
+    </blockquote>
+    <p>A simplistic void, or lack is more comforting than the whole. That the whole is to be fled, is obvious in the palatable popularity of this void, of positive lack, in the thought of our modern intellectuals. We circle lack, torus-like, so that we do not have to face the mere possibility of actually realized Wholeness. Let lack be the driver, rather than abyssal absolute negativity. In fact, we completely foreclose it from our entire structure, so there is no stray hope of the disaster of running into it. Run! Yet without this defense and fleeing, which really is running in place, our world would not exist in the shape that it does. And who am I to decry the world, which already decries itself well enough?</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="interlude-i">
+    <h2>interlude i.</h2>
+    <p>3 AM. I am taking a bath on LSD with the door open when my Mexican wife comes home from drinking with her friends. I never want to go out drinking with her, I want to be alone in the bath on LSD. This is a frequent point of tension in our marriage. She looks at me like I am an alien, the traces of the cold north in my blood so foreign to her soul-demand for constant socializing, emoting, dancing, alcohol and person-to-person passion. She is warm outside, frigid inside&#8212; I am frigid outside, warm inside. This night our respective variants of non-sobriety concur in a heartfelt chat while she sits on the bathroom floor. I am relaxed enough to offer my teasing narration, circuiting with her through ludicrous ground, as if spinning her around in a dance. Our laughter reverberates in candlelight. She notes that, absurdly, I am entirely coherent, as psychedelics had increasingly become easy to handle.</p>
+    <p>I love her. She is beautiful, and I am loving, I cannot help it.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="traipsing-downstairs">
+    <h2>traipsing downstairs</h2>
+    <p>Femininity has access to the 'underground'. Lacan noticed, shrewdly, that there seemed to be a plane of experience qua jouissance<sup class="fn-ref" id="ref1"><a href="#fn1">1</a><span class="fn-tooltip">Overall in this text, I am not keeping to a strictly Lacanian definition of jouissance, nor to any of Lacan's terms.</span></sup> privileged to woman&#8212; but that women themselves could not, or would not, speak about it.<sup class="fn-ref" id="ref2"><a href="#fn2">2</a><span class="fn-tooltip">"The plausibility of what I am claiming here – namely, that woman knows nothing of this jouissance – is underscored by the fact that in all the time people have been begging them, begging them on their hands and knees – I spoke last time of women psychoanalysts – to try to tell us, not a word! We've never been able to get anything out of them." (Lacan 75)</span></sup> Either all women coordinately, in a secret plot&#8212; which they are most often not even aware of! Get one in the interrogation room, this is futile, they likely have no clue save for their maddening parapraxes<sup class="fn-ref" id="ref3"><a href="#fn3">3</a><span class="fn-tooltip">To be fair, very few people of either sex have any idea what is going on save for their maddening parapraxes.</span></sup>&#8212; telepathically distribute the ordinance to not to talk about it, or it is in fundament unable to be articulated.<sup class="fn-ref" id="ref4"><a href="#fn4">4</a><span class="fn-tooltip">cf. The Goddess is silence.</span></sup> In his attempts to describe this, Lacan too hit a wall of inarticulability&#8212; because that is its nature, and when one goes about articulating their thought, they encounter the qualities of its nature. Lacan himself, in hysteric fashion, uses silence and unstatedness to bait&#8212; seduce&#8212; knowledge production, and this is part of his charm.</p>
+    <blockquote>
+      "As has always been the case in everything that has been called a dialogue, the point is to make the supposed interlocutor say what motivates the speaker's very question, in other words, to incarnate in the other the answer that is already there. It's in that sense that dialogues, classical dialogues – the finest examples of which are represented by the Platonic legacy – are shown not to be dialogues."
+      <cite>(Lacan 138)</cite>
+    </blockquote>
+    <p>I come to and find myself on the secret battlefield. I guess I got knocked out. I have surveyed lay of this land: Everyone is playing 5D chess here, and most of them are drunk, or in a fugue while they are playing. Yet somehow they are still strategically and ruthlessly playing. No one admits this secret battlefield is being fought upon all the time. Obfuscation is a weapon here.</p>
+    <p>Your kindness is an empty guise. You do not understand what you are doing, because you are drunk. I would have to explain to you that you are playing 5D chess. However you would likely deny this or be offended or dumbfounded, and still the whole time you'd continue playing 5D chess. Absurd! Fruitless! Exhausting! I will learn 5D chess for my own sanity, without being drunk, and go on my way. Goodbye!</p>
+    <p>Women, and men, for the most part do not face the fact that one of the building blocks of femininity is <em>the will to devour</em>&#8212; just look at the anatomy&#8212; because no one wants to defile the veil of Woman. What veil, and what Woman, anyways? She doesn't exist!</p>
+    <blockquote>
+      "Were there another [jouissance], it shouldn't be/could never fail to be that one. What does "that one" designate? Does it designate the other in the sentence, or the one on the basis of which we designated that other as other? What I am saying here is sustained at the level of material implication, because the first part designates something false – "Were there another one," but there is no other than phallic jouissance – except the one concerning which woman doesn't breathe a word, perhaps because she doesn't know <em>(connaît)</em> it, the one that makes her not-whole. It is false that there is another one, but that doesn't stop what follows from being true, namely, that it shouldn't be/could never fail to be that one."
+      <cite>(Lacan, 60)</cite>
+    </blockquote>
+    <p>Very gnostic. This is a description of Sophia traipsing downstairs, therefore creating downstairs.<sup class="fn-ref" id="ref5"><a href="#fn5">5</a><span class="fn-tooltip">Approximate rendition: 'It's midnight, I would like to have some juice. I'll just traipse downstairs and get some juice. Whoops I tripped and engendered the entire realm of mortal existence. Alright, I'll still get the juice.'</span></sup> Lacan's underlying theme in this seminar<sup class="fn-ref" id="ref6"><a href="#fn6">6</a><span class="fn-tooltip">Of course, Lacan as an exemplary man of his time is not making any metaphysical claims in his discourse. Just as I am not making any metaspiritual claims in mine. (i.e. all I say, I say in terms of Spirit.)</span></sup> is that if there is the One, qua the presumption essential to phallic jouissance, there is then the Not One, qua the implication of not-all jouissance. This is the whole admonition of Parmenides. Being is, and non-being is not. But in Parmenides' poem it is the Goddess who restates this law. It is She who can be in the underworld without erring. It is She who delivers the law&#8212; and who can accordingly address non-being, touch the presumption of void without being subject to its structural consequences. Not even&#8212; She <em>is</em> subject to them, but at no loss, retaining all her integrity.</p>
+    <p>It is the feminine that gets into trouble, and then the trouble is revealed to be no trouble. She does not mind trouble. It is Eve who listens to the Snake. The Snake is Spirit. It is Woman who is slightly ahead, in tune and in cahoots as she is with the pneûma, Φ. The fruit of the Tree of the Knowledge of Good and Evil is sex, because sex begets children, at least on occasion. Children introduce a higher dimension of meta-individual reflexivity to consciousness. The child is of the same blood, i.e. of the same Spirit, as the parents, and yet has the possibility, the opportunity to look back on them and become conscious of their discriminate qualities and corresponding structure, i.e. 'good and evil'.<sup class="fn-ref" id="ref7"><a href="#fn7">7</a><span class="fn-tooltip">Cf. Hegel's Human and Divine Law from the <em>Phenomenology of Spirit</em>, introduced around §446</span></sup> The child is the sublation of the parents. They then carry and elaborate this more logically complex consciousness towards their own ends; this is, 'practically-factually', how consciousness (in-itself) knows itself. (for-itself)</p>
+    <p>Then pleasure, as sensuous enjoyment, as the depth of life, is the structural precursor to knowledge, to the self-knowing of Spirit in-and-through mankind. This applies beyond sex. Sophia knows this very well. For her, the whole pet project of existence is fantastic and wholly worthwhile. Lacan says that there is no relation between the sexes. But from this angle I have just gone through it is clear that phallic jouissance, insofar as it is 'Symbolically locked', is dependent on, derives from and seeks not-all jouissance. That is, the Symbolic order is a continually constructed response to the hole in that order, and the beyond-of-that-lack is what Woman has silent knowledge of, knowledge she may not even know that she knows. We cannot speak about the not-all, there is nothing that can be said about it, but it itself provokes speech, is the impetus for speech.</p>
+    <p>If it is the case that the sexes cannot meet, or two subjects cannot meet, it may be so in the sense that the crest and trough of a wave cannot meet. It would not be a wave if they were in a simultaneous place. Yet they both comprise the energy of the wave, are not separable from the wave, and ripple continuously in and out of each other.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="aggressive-constellation">
+    <h2>aggressive constellation</h2>
+    <blockquote>
+      "Women content themselves <em>(s'en tiennent),</em> any woman contents herself <em>(aucune s'en tient)</em>, being not-whole, with the jouissance in question and, well, generally speaking, we would be wrong not to see that, contrary to what people say, it is nevertheless they who possess men."
+      <cite>(Lacan, 73)</cite>
+    </blockquote>
+    <p>What woman dares to be overt about her territoriality, without feigning to be belly-up?</p>
+    <p>I've fought tooth-and-claw for my own femininity. No one taught me, not a word spoken, that this was all a competition, or it was my mishap for not innately knowing. To the tune of evasive, ambient desire I conveniently took on the role of a masculinized sentinel&#8212; how else could I have achieved some distance and breathing room? <em>Nom-du-Moi</em>&#8212; Still the chasm of my hunger heightened every second, though I was largely unconscious of it, this made it dangerous&#8212; until my rage was volcanically absolute, Kali literally incarnate, no longer ignorable, pounding daggers. Stand back. I own this. My responsibility, as this has all been self-imposed there is no one to blame.</p>
+    <p>I am here, with this architecture. That is all that matters now. I afford myself patience while I am working my given conditions through.</p>
+    <p>In German New Medicine, which I know about because I am a 'type of hippie', there is an entire passed-over streamlining of personalistic psychoanalysis. Many people appreciate GNM for the implications about physical health, which throws into question much of the premise of modern medicine: the body is not a machine that breaks, but is always acting in its own interests<sup class="fn-ref" id="ref8"><a href="#fn8">8</a><span class="fn-tooltip">The very attitude that we need to 'fix', ourselves or the world in any way, by our own crude positivistic interventions, is itself symptomatic of the Spirit of the Times&#8212; personally distasteful to me, yet I can read it as having been our prevailing cultural condition for quite a while, and assume it has its own telos.</span></sup>, even in unfortunately fatal cases. All well and good, but I find the idea that personality constellations are direct responses to psychically perceived conflicts just as fascinating and useful. Through this framework, GNM provides some description of most individual psychic setups, including even a person's sexual orientation and sexual and gendered behavior.</p>
+    <p>According to GNM, an aggressive constellation is caused by a combination of an identity conflict and a territorial anger conflict. The exact outcome depends on the preliminary sequence and intensity of conflicts, laterality, gender and hormone status. If an aggressive constellation is active, the individual is 'hard', 'tough', extremely durable. The purpose here is the same as when an animal is backed into a corner: a last-ditch survival fight response. Once having been triggered, it often remains to some degree continually operant in the individual, affecting their interests (these to the degree it presents in the manic form): they may get aggressively themed tattoos, enjoy violent media, have a passion for verbal or physical sparring in hobby or career, and be prone to recklessness.</p>
+    <p>You cannot analyze away the psychic shape of yourself primed to have best been suited to your immediate circumstances, just as you would not be able to analyze away a bodily characteristic or ailment. None of these are random or arbitrarily arising. Symptoms of any kind, physical or psychic, respond more constructively if first understood, even appreciated as underlying adaptations or stabilizations towards health rather than as capricious illness. Though this does not mean you are absolved of choice.</p>
+    <p>Rather than reducing the individual to biology, I read GNM as centering Mind in biology, as all conflicts are first perceived in Mind, and then in undulative response display through the <em>soma</em> before returning into Mind. The quality of perception of an event, itself a phenomenon of perception, changes its consequent effects.<sup class="fn-ref" id="ref9"><a href="#fn9">9</a><span class="fn-tooltip">I could introduce more complexity with the 'dimension' of timelessness here, where the 'perceived event' and its 'effects' are in no way separable but 'occurring' at once. Linear time is a particular illusion required for the experience and phenomenology of linear history. Cf. Matte Blanco's symmetry of the unconscious. I will leave it out for now.</span></sup> These effects are poetic, metaphorical rather than literal, e.g. when one has to 'swallow' a situation they don't like, they may get a sore throat. What on the surface appears to be the same event presented within consciousness could affect two individuals radically differently. This is also the 'cure'; the shifting of perception shifts its consequences. Everything begins in Mind, and then finds expression in body and psyche. The body and the psyche are not separate apparatuses. The body is the manifest psyche, or the psyche is the latent body, and vice versa. The whole phenomenon of an individual, including their physicality, psyche and behavior, is a display of Mind, qua <em>Geist</em>.<sup class="fn-ref" id="ref10"><a href="#fn10">10</a><span class="fn-tooltip">Spirit <em>is</em> a bone.</span></sup></p>
+    <p>Here an excursion into subjectivity is relevant. Different shapes of subjectivity, different subjectivities arise as logically required by consciousness. A structure of subjectivity is a concretized response to and node within its logical environment. An environment produces a subjectivity out of itself, like an invisible fungal network produces an above-ground fruiting body, as a structural necessity. Consciousness through-and-as each subjectivity has a specific work, or purpose qua Will to be realized by it (and consciousness proper or rather <em>Geist</em> does not phenomenally exist and has no reflexivity without this work of conscious realization), even when this cannot be positivistically discerned.</p>
+    <p>A subjectivity is a locus of consciousness that bears witness to its own contents, is itself the consciousness of and that-which-determines those contents. A subjectivity comes to awareness of itself through the familial and cultural imagos out of which it has been constituted. There is a sense in which a particular subjectivity is caused by its imagos; another equally valid sense wherein a particular set of imagos are themselves caused by the nature of a particular subjectivity.</p>
+    <p>Returning to GNM, the way that specific subjectivities come to be specifically shaped, with specific gifts, skills and aptitudes, is for them to have structured themselves according to certain stimuli or conditions of consciousness. GNM is a particular empirical (i.e. horizontal) attempt to map this, that I find difficult to categorically distinguish from the operating premise of personalistic psychology qua anthropology. Compare Hegel in the <em>Philosophy of Mind</em>, §401:</p>
+    <blockquote>
+      "The system by which the internal sensation comes to give itself specific bodily forms would deserve to be treated in detail in a peculiar science&#8212; <em>a psychical physiology.</em> [&#8230;]<br><br>
+      [<em>the venerable, apocryphal Zusatz:</em>]<br><br>
+      [&#8230;] before this content can be felt two things are necessary, an external occasion and a corporealization of the inner content, and therefore a transformation or a connection of it which constitutes the opposite of that connection into which the content given by the outer senses is brought by its symbolic nature. Just as the <em>outer</em> sensations symbolize themselves, i.e. are connected with the mental or spiritual <em>inwardness</em>, so do the <em>inner</em> sensations necessarily <em>outwardize</em>, corporealize, themselves because they belong to the natural soul and consequently possess an affirmative being, therefore must acquire an immediate existence in which the soul becomes for itself.<br><br>
+      [&#8230;] It is only by the corporealization of its inner determinations that the subject is enabled to feel them; for before they can be felt it is necessary that they be posited both as distinct from the subject and as identical with it; but this occurs only by making outward, by the corporealization of, the inner determinations of the sentient subject."
+    </blockquote>
+    <p>In terms of an aggressive constellation, for a subject to have tenacious capacity, requires their structure as having needed occasion to cultivate tenacity. Is this tenacity necessary? It seems to be, for it is what is; if it is not necessary, it is in the way that nothing, no singular quality is on its own necessary. Yet every work in the world requires a certain shape of subjectivity to have produced it, and every work in the world is a contribution to-and-of consciousness. What is required arises of its own accord; what is not does not. Nothing needs to be done either way.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="interlude-ii">
+    <h2>interlude ii.</h2>
+    <p>An imp, I wear oversized menswear from vintage shops, sitting in terraces and drinking vermouth.</p>
+    <p>I'm friendly with the butcher and warmed by his smile. I go to buy liver, fresh, organic, as I am picky about the taste, with which raw or seared I make pâté. I spread this on top of toasted sourdough and layer it with something obscene, like cornichons, or slices of manchego, or anchovies. I go hiking in the mountains, to bask in fresh air and crisp snow. I'm easily entranced by rivers cascading over rocks, by blackberry bushes, by grazing goats. Once in a while I take my wife along and we eat paella with big snails.</p>
+    <p>There are wild peacocks in abandoned barracks and desolate tennis courts. They observe me warily with their fat spring chicks. There are royal peacocks in the king's garden resolutely cawing as I lay next to a fountain after mediating on esoterically flavored <em>helado</em>&#8212; <em>violetas</em>, or <em>te verde</em>. I take the metro back and forth, from nowhere to nowhere, lugging rolls of canvas and stretcher bars over my shoulders to make paintings for no one. I subject myself to the hottest sun in empty fields of cracked dirt overlooking gypsy camps. I walk for hours through the city with no destination, mulling over and over everything. I bask in roses.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="the-so-called-cosmological">
+    <h2>the so-called 'cosmological'</h2>
+    <p>Three angles.</p>
+    <p>1.</p>
+    <p>My trips are cognitive. The surroundings may warp, sure, everything gets eyes, but seldom is there a real vision. If there is it is a notable event, not guaranteed by any dosage. And this is distinct from what I can see 'in my mind's eye' or the imaginal, which for me is sight not directly visible. Terrence Mckenna described LSD trips as 'psychological' in the sense of being only about the personal psyche, and not extending cosmologically in the way mushrooms did for him. In my experience, the two substances aren't so different, and the so-called 'cosmological' can appear under whatever conditions 'it' 'wants to'. But, if we define the psychological in the wider sense as the cognitive, (that is, the 'the psychological' as the only actual category)&#8212; then, again&#8212; my trips are cognitive.</p>
+    <p>Thought has little to do with strenuous efforts of intellect on their own. You can be, and people are, well-read and well-written without any consciously embodied thought at all&#8212; horizontally 'thinking about', instead of vertically 'thinking from'. 'Thinking about' structurally excludes the very possibility of the realisation and actual reality of one's concept, as this type of 'thinking' is happening <em>outside</em> the concept, or with the concept as an object rather than subject of thinking. Without stepping into the subject-status of the thought, its 'essence' or 'inner infinity' remains unknowable, qua Kant's thing-in-itself.<sup class="fn-ref" id="ref11"><a href="#fn11">11</a><span class="fn-tooltip">Cf. Parmenides "The thing that can be thought and that for the sake of which the thought exists is the same".</span></sup> All generative geniuses across all mediums, <em>not only 'thinkers'</em>, are at minimum instinctively aware of this geometry.</p>
+    <p>Yes, scholastic formal knowledge is useful in sculpting and refining the conveyed form, and can be helpful for one's consciousness to be historically up to date and breadth. But, real thought itself is like being struck by lightning<sup class="fn-ref" id="ref12"><a href="#fn12">12</a><span class="fn-tooltip">The way I have phrased it, this could imply an external agent, in the way that for example (in the positivistic reading) Semele was struck by the sight of Zeus. But I mean to hold and deepen the tension here: Thought does not come from 'outside of you', but neither does it come from 'you'.</span></sup>, and often leads itself to discover what sources it requires. It is preceded by <em>going pregnant</em><sup class="fn-ref" id="ref13"><a href="#fn13">13</a><span class="fn-tooltip">This phrase is from Giegerich, this concept is from everywhere, including my own experience.</span></sup>, regardless of one's sex. I conceive a concept; this is a conception. The momentary ego's most clarified function, then, is as maieutic steward to itself. Another formulation: the Real is generative. We have all become our own men, can we also become our own women?</p>
+    <p>Saint Teresa of Ávila! I get it, I know you well. The 'interior castle', the Heart, is the house of God&#8212; not to be found 'outside', i.e., not in a posited 'other'. One cannot reach it but must be reached by it. The creation, separation and severing of the 'inner' and the 'outer' is an accomplishment of the modern myth in the first place, and in determinately defining that I am no longer bound by it. Realising I was able to think, and the moments where I do experience actual thinking<sup class="fn-ref" id="ref14"><a href="#fn14">14</a><span class="fn-tooltip">I believe Wilfred Bion spoke of this.</span></sup>, is like mainlining ecstasy or morphine&#8212; the bliss is utmost. It is not that mysterious.</p>
+    <p>2.</p>
+    <blockquote>
+      "Thought is jouissance. What analytic discourse contributes is the following, and it is already hinted at in the philosophy of being: there is jouissance of being."
+      <cite>(Lacan, 70)</cite>
+    </blockquote>
+    <p>For Lacan, there is an incommensurability of the subject with its being, as the being is only being insofar as it is speaking, within language. Yet this splits the being of the subject with itself, for that being cannot be articulated given the nature of Symbolic language, that is, there is no signifier for the subject. You are speaking but then you are not being. Or, you are not speaking, but then you are not heard, i.e. comprehended by the other, the recognition by which is necessary for the full presence of a human subjectivity. The jouissance of the unarticulated being, is in relation to not-all jouissance, that which escapes and is, and is nothing other than, the incompleteness of language&#8212; because how can it be if it cannot be inscribed? This incompleteness itself does not exist, in the sense that there is nothing that could 'complete it'. Yet the subject fantasizes, that perhaps if they themselves could either fulfill or sustain the desire of the Other, then they will not have to face their own desire and incompleteness. That desire of the Other is then adopted as the subject's own.</p>
+    <p>'Desire is the desire of the Other' is a way of saying that reciprocality is always in effect. Or who the hell was the first cause? There is no O/other but the inverse of itself. Dialectically, the logically negative essence of one term is mutually discovered to be the positive form of another term. The subject implicates, is implicated by its object, no matter which subject. This engenders a recognition that surpasses the natural, i.e. the positive. This knowing is absolutely negative. The essence of the first term, by finding and becoming conscious of its explicit outer aspect in the form of the second, and the second term's likewise cross-realization, both terms being realized and realizing, cancels out all four components of the two total terms by a sublation of consciousness. Analogous to the way that a positive charge and a negative charge attract and neutralize each other, except this is happening twice and crossing between two 'planes'. Ego-psychology reductively knows this as 'transference'.</p>
+    <p>To interact with, meet someone in the depths is to know and be known by them in this way, to affect and be affected by them. What is this if not a real meeting? But how few dare venture there&#8212; how few are called or struck&#8212; how few have need of it. This is always in effect in all situations, between all people, but there is a substantial qualitative difference in the explicit consciousness of it, and too in the effects that rise for this consciousness, versus its much more commonly un-interiorized, unconscious passing-over.</p>
+    <p>3.</p>
+    <p>The whole is not exhausted by being whole&#8211; that is, the whole has no endpoint. It is the invocation of its own dynamism and it is endlessly dynamic. The infinite contains an infinite amount of infinite and finite sets. Fine. This is not stunning. What <em>is</em> astounding&#8212; <em>the finite contains an infinite amount of infinite and finite sets</em>. I think of the Banach-Tarski paradox. The infinite holds the finite and the finite holds the infinite. The finite is already infinite, therefore dynamically self-turning. The finite loves the infinite and the infinite loves the finite, and both of them are interlaced in every moment. Yet from certain 'perspectives' one or the other can appear absent, for the sake of playing hide-and-go-seek.</p>
+    <p>The Symbolic has to act as if it is a stationary whole, as One, while its entire drive results from the fact that it also knows it is not&#8212; it is lacking, is the logical result of its positing its own lack. This apparent lack cannot be confronted or dealt with directly without the destabilization of the entire premise, yet is the reason for the circulation of the torus. The lack has to be there for the structure to function, but it also is itself nothing in that it cannot be fulfilled and can never be looked at, because this 'unable-to-be-fulfilled-ness', this impossibility of transcription, is traumatic or whatever, void and full at once, the uncontainable Real&#8211; that dynamism that squarely faced puts into question all finitude.</p>
+    <p>This impetus not to look is what has ousted the notion of Truth from having any place in modernity, because if there is a lack, there is no Truth&#8212; or, rather, Truth requires comprehension and determination of its own structural lack, which is precluded by the refusal to look at it.<sup class="fn-ref" id="ref15"><a href="#fn15">15</a><span class="fn-tooltip">There is a sense in which this 'refusal to look' is itself the total elaboration of the lack, which has to be fully exhausted to be determined, this is a logical requirement modernity is, unbeknownst to itself, faithfully carrying out. In knowing this one has the intimation of the telos of modern Soul set visibly on a platter, etc etc etc, I do not want to critique the world but pin it down by knowing it in and through all continuous movement.</span></sup> Yes, there has always been a veil&#8212; it used to be known there was a veil, and there were cultural avenues to encounter it&#8212; now we culturally-logically are not even aware that there is a veil, that there is something to be veiled, that it is possible to encounter and unveil if one wishes to. And&#8212; where else would it be?&#8212; the Real?&#8212;</p>
+    <p>Lacan has an idea of this&#8212; all is 'true' but nothing on its own can claim to be 'true'. The Truth is the Whole; for something to 'make a claim to truth' implies there is a reality to which it refers that it can be checked against, and either proven 'correct or incorrect'. But Truth is its own reality, of which nothing is outside. The very act of needing to make a <em>claim</em> to truth, is evidence that real Truth is not at all grasped. For Truth has no requirement to be asserted, to be believed or not; when present it is undeniable.</p>
+    <p>Truth, already a huge ask for consciousness to come to grips with as it requires the restless negativity, absolute negativity of the transcendental (vertical) vector, now without legitimate ground so with groundlessness as its 'ground', to be comprehended in immediate immanence, without collapse of differentiation, qua actuality, and as this very consciousness itself, is the base requirement for the first intimation of the full scope of Love. Truth and Love are two moments of the same structure; the Truth is Love. Without first enduring as Truth and all that entails, 'love' remains unknown except as mere animal-love, mere union, at best impotent, at worst offensive. The Whole, qua Love proper, has no need to devour, as it already holds everything. It even holds, with all allowance, the mortal proposition of void, of lack, which is the attempted refutation of that very Whole. It unifies its own difference, while simultaneously absolutely upholding its own positing of all difference in all moments, and all momentous movement. If you do not find this impossibly staggering, I suggest that you have missed the meaning here.</p>
+    <p>Such is the 'cosmological'.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="le-vertical">
+    <h2 class="italic-heading">le vertical n'existe pas</h2>
+    <p>In pretext: As everywhere else in this writing, when I say Man/'masculine' or Woman/'feminine' I take for granted the predicate an-sich, that is, I am not speaking about individual people, men and women, but Man/Woman as presented notions in themselves; yet also I do not inherently exempt the extrapolation that people as phenomena are subjectively structured or informed to varying degrees and qualities by these prevailing notions. Moving on&#8212;</p>
+    <p>The feminine libido is oriented towards the vertical, the masculine libido is oriented towards the horizontal.<sup class="fn-ref" id="ref16"><a href="#fn16">16</a><span class="fn-tooltip">I have come across descriptions approximating some aspect of what I say here of verticality vs horizontality from at least four distinct sources. I am going to cite none of them. Figure it out!&#8212; relenting, actually, I was recently reminded that Simon Mirk refers to 'the disappearance of the vertical axis' in this <a href="https://simonmirk.substack.com/p/got-a-light-section-i-positive-spirit" target="_blank" rel="noopener noreferrer">very good, relevant essay</a>&#8212; &amp; another source is Giegerich, to no one's surprise.</span></sup> The vertical is self-relation (that all is Self), uroboric&#8212; infinite, unconditional&#8212; the self-knowing Divine. The horizontal is other-relation (that there is always an other, therefore there is a differentiated subject)&#8212; finite, conditional, on its own prohibitive between the non-local coordination of subject and object&#8212; the Divine as representing itself to itself in necessary amnesia.</p>
+    <p>Insofar as one is horizontally oriented, the place of action is 'in the world'. Insofar as one is vertically oriented, the place of action is 'in no action'. Horizontal orientation lends to motion, vertical orientation lends to stillness.</p>
+    <p>Lacan lays out that masculine libido is organized around objet petit a, the object cause of desire, which while a cover of lack, appears as image, fantasy. I see the Jungian Anima here, which also concerns the plane of image qua experience as object, and is also effectually an organizing cohesive for the aims of the subject.<sup class="fn-ref" id="ref17"><a href="#fn17">17</a><span class="fn-tooltip">Libido as a word is a guise for Soul. So one could say, 'The Soul of Man is organized around the Anima (that is, itself) . . . '</span></sup> Images are viewed, that is, they always structurally posit an other. Horizontal. Positivity&#8212; Anima&#8212; The Khu.</p>
+    <p>Then what is feminine libido, 'not all' libido, organized around? Lacan brings out the mystics and says this can only be God&#8212; ostensibly the exception to castration, the phallic function itself, that props up the castrated masculine subject's very possibility to be a subject, and is within the Symbolic exactly as an absence. So feminine libido is vertically oriented. Negativity&#8212; Animus&#8212; The Khabs.<sup class="fn-ref" id="ref18"><a href="#fn18">18</a><span class="fn-tooltip">Chapter 1, <a href="https://sacred-texts.com/oto/engccxx.htm" target="_blank" rel="noopener noreferrer">8. "The Khabs is in the Khu, not the Khu in the Khabs"</a>. Chapter 2, 3. "In the sphere I am everywhere the centre, as she, the circumference, is nowhere found. 4. Yet she shall be known &amp; I never."</span></sup> This is fundamentally distinct from objet petit a because <em>it cannot be represented</em> in image, not even as a cover of lack.</p>
+    <p>When Animus appears in image, he is doing so on and through the plane of Anima. By calling 'him' 'he', I am still playing the game of Anima, that is, I am implying an ontic from to describe that which has none. Compare <a href="https://sacred-texts.com/chr/tic/tic17.htm" target="_blank" rel="noopener noreferrer">St Teresa</a>:</p>
+    <blockquote>
+      "The sight [the soul] has enjoyed of Him is so deeply imprinted on the spirit that its only desire is to behold Him again. I have already said that, even by the imagination, <em>nothing is seen in this prayer that can be called sight.</em> I speak of it as 'sight' because of the comparison I used." (my emphasis)
+    </blockquote>
+    <p>I might play and call it the <em>subject cause</em> of desire. Feminine desire is not organized by image&#8212; image is only a tool for her desire.</p>
+    <blockquote>
+      "But we could, on the contrary, be dealing with the infinite. Then it is no longer from the perspective of extension that we must take up the not-whole <em>(pas-toute).</em> When I say that woman is not-whole and that that is why I cannot say Woman, it is precisely because I raise the question <em>(je mets en question)</em> of a jouissance that, with respect to everything that can be used in the function Φx, is in the realm of the infinite."
+      <cite>(Lacan, 103)</cite>
+    </blockquote>
+    <p>Lacan is careful to note that a man can easily take on a feminine position, and vice versa&#8212; there are phallic women and mystic men, yes, why not! Everyone has access to both modes, if they like.<sup class="fn-ref" id="ref19"><a href="#fn19">19</a><span class="fn-tooltip">Religious ascetics of most stripes, for example, are oriented towards the vertical. Oracular speech requires vertical orientation, and so does good art-making and authentic creativity in general.</span></sup> Most people engage with both to some degree. Every subjectivity is a unique and novel structure. Yet there are trends, and the fact that an individual incarnates with a particular anatomy speaks to a certain preset resonance with one mode or the other, at least on one level. Still this freedom of particularity is itself a novel condition&#8212;</p>
+    <p>In pre-history, it was Man that did not exist. The status of reality itself was structurally psychotic, insofar as we define psychotic structure as the undifferentiated unity of the subject with the Real, wherein the individual and separate ego identity are not yet occurrent. In Giegerich's terms, this was Man's unbornness, his total containment in Soul. There was no horizontal. Nothing was mundane; everything shone with immediacy from within. <em>People</em> did not think, <em>Soul</em> did all thinking a priori for them in the background, and sustained them implicitly with this meaning and nourishment. There was, in a real sense, only the vertical, only the absolutely negative which was really immediately present <em>in</em> horizontal 'objective experience'. This is a modern way of describing it, as there was no object/subject divide within this status in the same way as we conceptualize such a divide now. There was not even a way to think the 'horizontal' contra 'the vertical', because the two had no differentiation from one another. This is why differentiation and the threshold had to be acted out as initiation and ritual, because it was not syntactically available.</p>
+    <blockquote>
+      "Returning to my notion of paranoiac knowledge, I tried to conceptualize [&#8230;] the palace of mirages that reign in the limbo regions of the world that the Oedipus complex causes to fade into forgetting. [&#8230;] I think that the Oedipus complex did not appear with the origin of man (assuming it is not altogether senseless to try to write the history of this complex) but at the threshold of history, of "historical history" [&#8230;] I am convinced that its function had to be served by initiatory experiences in cultures that excluded it[.]"
+      <cite>— Lacan, "Presentation on Psychical Causality"</cite>
+    </blockquote>
+    <p>For the West, through the rise of monotheistic religion, the philosophic tradition (incepted in Greece), and then metaphysics, there was a transition from the prior Vertical-only world to the Horizontal-only world. In these transitional ages we had both, but as increasingly mutually exclusive, with a new demand for Man to consciously ascertain for himself the mind of God. The vertical was slowly posited as off-limits, unreachable within a mortal lifetime. In the modern era, the vertical has entirely disappeared. It is not even prohibited, it is simply gone.<sup class="fn-ref" id="ref20"><a href="#fn20">20</a><span class="fn-tooltip">I'm summarizing Giegerich's summary of Soul's logical history.</span></sup> (<em>in the real existing logical status of our phenomenal culture</em>, I do not speak of particular individual statuses here.) I would say, then, that all the frustration and destruction present in our modernity, is like the rage and acting-out of a toddler, having begun to ascertain their own real autonomous capacity, but lacking the coordination to act with it and easily thwarting themselves.</p>
+    <p>Contradictorily, the very possibility of the ego is an achievement of Animus. The ego is a differentiation from its world as it posits itself against it. This differentiating movement, a negation, is a movement of Animus, the function of negation. In the 'vertical-only' world of prehistory and in the myth stage consciousness, as there was no individual subject, the differentiation of Animus was expressed in literal actions, i.e. ritual, which had to be continuously performed to sustain the differentiation, as it would otherwise evaporate from particular subjects over time.<sup class="fn-ref" id="ref21"><a href="#fn21">21</a><span class="fn-tooltip">Just as a psychotically structured subject has to continuously interpret and define his idiosyncratic symbols to maintain himself as a separate subject, or the perversely structured subject has to continuously provoke with their perversion to sustain some stabilization analogous to actual structural castration which they lack.</span></sup> The overarching vertical was like a great continuous torrent that had people as its participant actors, its figures. Said people could not realise themselves as vertical subjects, as agents.<sup class="fn-ref" id="ref22"><a href="#fn22">22</a><span class="fn-tooltip">Cf. Jung's "It was then that I ceased to belong to myself alone, ceased to have the right to do so. From then on, my life belonged to the generality." from <em>Memories, Dreams, Reflections</em>, 192.</span></sup> To put it in terms of the syzygy, Animus existed 'within' Anima, but entirely implicitly, and only in the universal, not in the particular. The universal dominated the particular. And now the particular dominates the universal, rather, has been abstracted from its vanishing.</p>
+    <p>For Animus to be particularized, it required the development of the I, and then the ego, which only came about through a structural castration involving a long, gradual, violent, hard-won differentiation out of Soul. Now, we have reached a state of such prevalent particularity that there is no vertical, there is no universal, there is no cosmological. What is universal in appearance today is that there is no universal. Everything for modern consciousness is 'subjective', in the sense of being a matter of opinion, flights of fancy and arbitrary preference. There is no cultural notion of or conscious access to <em>actual</em> truth.</p>
+    <p>And without the vertical, there is also no Woman. Sie ist weg. She used to be the truth-keeper.</p>
+    <p><em>La femme n'existe pas</em>. Woman logically no longer exists as a category. The category used to exist, like dinosaurs used to exist, and you can still see this in cultures where women occupy a significantly differentiated position from men. This is not foremost motivated by oppression, but by reverence within logical statuses where Woman bore the explicit form or was the symbol of the negativity of Soul. Rather: Woman <em>is</em> still the symbolic bearer of the negativity of Soul, but we no longer recognize the negativity of Soul, so we can no longer recognize Woman as that symbol, therefore, we have no goddamn clue what she is. In the modern West, there is no Woman as a category&#8212; everyone is, in theory at least, an equally free Man.<sup class="fn-ref" id="ref23"><a href="#fn23">23</a><span class="fn-tooltip">Cf. "Why is Aion the true name for God? Because the fact God is a plurality (so everyone – whether they recognise it or not – is in one sense analogically male in a specific relationship) seems to be the salient aspect." Chapman, <em>Magia and Gender</em>. With this I am trying to imply that there is a legitimate structural reason for the reverberating cultural parody of this 'all-male-ness'. (the phenomenology of 'feminism', which is a negation of the feminine, by the way.)</span></sup> We know not the negative so have no explicit symbol for it. Not that women don't occupy a differentiated cultural position, they still functionally do&#8212; we (the cultural we) just insist on glossing over this, indeed attempting to structurally do away with it, because it is not the case for the program of our consciousness.</p>
+    <p>Man first directly perceives the particular, and then secondarily, given enough consciousness, the universal. Woman first directly perceives the universal, and then secondarily, given enough consciousness, the particular.<sup class="fn-ref" id="ref24"><a href="#fn24">24</a><span class="fn-tooltip">One demonstration of this is the phenomenon where a woman mistakenly calls you every name in the familial kitchen sink down a descending list before she arrives at yours.</span></sup> With no legitimate universal, then, how can there be such a thing as Woman?</p>
+    <p>For Woman to exist, her psychic economy would have to exist. But it does not, the entire axis is absent, so she does not. There is nothing legitimate for Woman to organize herself around. This is why Western Woman is relegated/relegates herself to Girl, and has no conscious concept of any other option, or of what feminine power on its own standing actually is. And, crucially&#8212; the fact that her psychic economy does not exist does not mean it does not happen. Through one lens, it is the only thing occurring, and is the defining signature of the restlessness of the West. Appetitive, with nothing that satiates the appetite. Woman is the one who posits the substance of existence&#8212; the Goddess is the one responsible for the 'downstairs'.</p>
+    <p>Lacan's very uncoupling of anatomical sex from sexual structural position, and stating an elimination of any possibility of a real Symbolic relation between the sexes, is one prime phenomenal expression of Woman's disappearance. Lacan gave voice to the phantasm of Woman, who though is absent from the regular chess board, continues as before in the 5D one. Though she is evermore baffled as to what her legitimate position is supposed to be, or if what is 'supposed to' be is that this indeed will never be legible, and that is its power.</p>
+    <blockquote>
+      "These mystical jaculations are neither idle chatter nor empty verbiage; they provide, all in all, some of the best reading one can find – at the bottom of the page, drop a footnote, "Add to that list Jacques Lacan's <em>Écrits"</em> because it's of the same order. Thanks to which, naturally, you are all going to be convinced that I believe in God. I believe in the jouissance of woman insofar as it is extra <em>(en plus),</em> as long as you put a screen in front of this "extra" until I have been able to properly explain it."
+      <cite>(Lacan, 76-77)</cite>
+    </blockquote>
+    <p>Lacan can only gesture to God to try to make sense of women and what they get so worked up about.<sup class="fn-ref" id="ref25"><a href="#fn25">25</a><span class="fn-tooltip">Wikipedia says his mother was 'ardently Catholic'. I am actively restraining myself from psychoanalysing him.</span></sup> But, what is the full implication of this in a society where God as concept is dead? The feminine libido turns to the black market vertical. Think of the feminine obsession with true crime. Another available option is to develop spirituality in the form of picture-thinking, which is the only sideline cultural avenue of the vertical, though this often falls flat.<sup class="fn-ref" id="ref26"><a href="#fn26">26</a><span class="fn-tooltip">In the similar sense that Hegel articulated Christianity as having the real truth, but still within the form of picture-thinking and not reaching the level of the Concept, i.e. still as horizontal positing, not reaching the logically negative.</span></sup> The more common option is that she displaces the vertical onto Man, holding him responsible for it, and either hates, worships or apes him, which are all really different instantiations of the same misidentification. All of these options are reflective of different larger developmental stances in regards to Animus, which it seems we remain thoroughly steeped in yet unconscious of, despite Animus qua the Christian Spirit continuing to be our most urgently relevant and driving psychological principle.</p>
+    <p>Maybe I am not well-read enough on the secondary literature, certainly I am not, but that from what I've seen the common takeaway from Seminar XX is that 'it is possible for people to be non-heterosexual', or 'women are mysterious', and not directly 'Woman desires God, and therefore Woman as category is inarticulable as her desire is inarticulable' seems absurd to me.</p>
+    <p>What does it mean that woman wants phi, wants 'lack', structurally? Classically, if we're being classic, the (hysteric) Woman forges the (obsessional) Man, because she is aware what appears to be lack is the call of the beyond-which-is-not-beyond. She <em>has to</em> desire the beyond, or we would still be in the garden. She can precognitively sense the full vertical (erect) capacity of a given particular Man, particularly proper to him, and inspires, catalyses this in him through his continuously reaching for her. She is inarticulable because she has to be continuously ahead of articulability for there to be a structural stimulus for articulation&#8212; a spine is an articulation in that it is a coherence of joints. So without the vertical&#8212; there is no spine&#8212; only exponentially multiplying entropy.</p>
+    <p>The vertical is gone. Gone! It is no longer handed out or automatically given. And there is no return to the past just as one cannot crawl back into the womb. That is not the way. We are called, given the opportunity, to face our real logical conditions and evolving requirements of consciousness, <em>here</em>, <em>now</em>. It is the vertical that 'does not exist', and this structural feature of modernity is what gives rise to all these present quirks and tilt of the world. For of course, the vertical is still always in operation. But even while being in operation, it now 'does not exist'. Jung said the gods of old fell from the heavens into the unconscious. Echoing Giegerich, they did not fall into 'the unconscious', but into matter. Rather, their empty locus, their absence is present in apparent matter&#8212; in the horizontal.</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="realise-oneself">
+    <h2>realise oneself</h2>
+    <p>There is an important observation essential to continue: neither vertical nor horizontal orientation (and also neither the 'feminine' nor 'masculine' libido as so described) have fully realized themselves as subjects. They are both focused on attaining an object&#8212; a horizontal object-as-subject or a vertical subject-as-object. Either way, both are still largely being related to as objects. Insofar as one falls into the appearance of the object (anima-seduction), one's own subjectivity is inaccessible: misrecognized and misattributed to the object. It does not matter if this object is a person, an ideology, a material possession or 'God'. In this sense it is all horizontal; the vertical orientation only has a special case of an otherwise horizontal object. And though pre-history was 'vertical only', the vertical then subsumed people as its acting subjects, and was not experienced by them as their own subjectivity; to the extent that it was, it was a subjectivity pre-grounded in a definite Divine.</p>
+    <p>Subjectivity experienced as a <em>cut</em> in modernity is symptomatic of the empty locus of the vertical, or the vertical that experiences itself as an absence. Subjectivity is not a <em>cut</em> but the cause, coordinator&#8212; still itself absolutely negative. Apotheotic realisation, that one's <em>own</em> subjectivity is in itself always already<sup class="fn-ref" id="ref27"><a href="#fn27">27</a><span class="fn-tooltip">Giegerich calls this 'always-alreadyness' (that the goal is already present from the outset to attain it) the ouroboric logic of the copula, prevalent in the historic age of metaphysics. (and prior) see: <em>Coniunctio.</em> In this definition, the copula is still happening on the level of Soul, so is already pre-given to people and realized 'outside' or 'underneath/above' them. I am here indicating the nearly inconceivable radicality of realizing it directly for oneself, and holding through all the contradictions that entails.</span></sup> the vertical, makes it entirely obvious that the horizontal corresponds sympathetically to the vertical and always has. The horizontal is the garb of the vertical, which the vertical as subject inhabits absolutely as its cloak, its substance. The two are syzygially yoked, each a reflection of the other&#8212; at least this is what is occurrent in phenomenal existence. Before the realisation of the verticality of subjectivity, this fact of correspondence is obscured and the two 'dimensions' seem totally separate. Here then results the coveted lapis: A consciously transparent Mind-World relation, Mind delighting in itself as its World, World delighting in itself as Mind, all-saturated with inherent beauty and nobility. But this lapis being nowhere is already everywhere. Strive for it and it recedes; it can only be gained by ceasing to look for it.</p>
+    <p>While the instantiation of direct immanent Divinity, unbridled from the institutionally religious mode of consciousness<sup class="fn-ref" id="ref28"><a href="#fn28">28</a><span class="fn-tooltip">Hegel called this 'positive religion'.</span></sup>, is possible to realise, as it has always been, it currently seems to be an event that happens only in-and-for specific individuals. That is its structure: the quantitatively sparse realisation of the universal through and only by virtue of the direct particular is starkly contrasted with a quantitatively plentiful particularity having replaced the universal and thereby itself becoming a bland universal. The culture at large plays pretend at the Divine, entirely earnestly but unconsciously, without having or consciously acknowledging the Divine. That is dangerous, and has resulted in the current world. Good luck, I have said before, good luck, to everyone. It is a game anyways, and I am not the one who solely decides how it goes, nor do I have any idea how it 'should' go. I can only be with it as it is. We live in the Wild West.</p>
+    <p>The neurotic, who is unable to own himself as Other, and in a culture with no verticality, defaults the locus of authority to the one who claims to act on the absolute authority of the Other&#8212; the perverse, scientific, technological priests of progress&#8212; the horizontal place for God, which is no God at all, or only blind ones. With this our society is illuminated. Neurotic air continues to burn itself off and as the Symbolic further and further reveals its integral fractures we are ever more embedded in the bare suggestion of the blossoming stance, now still entirely unconscious, of <em>unio mentalis</em> and 'ordinary psychosis' as a structure takes some interim prevalence here, etc. If I fancy myself to speak in these terms, and if I am not delusional, etc.</p>
+    <blockquote>
+      "It is therefore by no means a matter of the decision about ontological relations in reality, but rather of the decision whether we wish to comprehend ourselves as Spirit and make use of our being-Spirit or not. Rather than being ontologically about the question of the real-being or irreal-being of the hope of reaching the goal, it is a matter of whether we logically rouse and raise ourselves up from the metaphysical stove-hugging, from the inertia of being in the logical status of natural being; it is a matter of our being-challenged to dare&#8212; contrary to all empirical appearance&#8212; to lay claim out of hand to Divine childhood or to chosenness for ourselves, and to place ourselves firmly on this standpoint as our ground; it is a matter of whether we (not only somatically but also logically) raise ourselves to upright gait or crawl on all fours as mere natural givens."
+      <cite>(Giegerich, 312. transl.)</cite>
+    </blockquote>
+    <p>Whether we wish to comprehend ourselves as Spirit, and make use of our being-Spirit or not. Whether we wish to know ourselves as the vertical. You can palpably feel when someone is in conscious vertical alignment with themselves. Sailing through the air like a clear bullet, generating themselves out of the mist&#8211; no neurotic doubt, no endless searching, unperturbed, good-humored. Hypersonic&#8211; comfortable and present in, attentive to, yet always already beyond their sensuous (ontic) image-field, that which is an effect of their own past-future trajectory. Like Kierkegaard's Knight of Faith, they are "[&#8230;] continually making the movement of infinity, but [making it] with such accuracy and poise that [they are] continually getting finitude out of it, and not for a second would anyone suspect anything else."</p>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="section" id="adventure">
+    <h2>adventure</h2>
+    <p>I want to think deeply. As I bring this drive to mind, I start to feel intense. I can and have psychoanalysed this longing until the cows come home but that does not alter it. It is the exact same longing that informs my painting, which is why I now view painting as a form of thinking. And conversely view the self-display of thought, my own and others, with the sensibilities of an artist, without letting its prerequisite rigorousness fall entirely wayside. Whether I succeed in my aim of thinking deeply is another matter, I am not too concerned with that at present. Instead I turn towards tending my vivid current.</p>
+    <p>For so long I was frustrated with the world for 'not being real'. I felt so intense, all the time, and there was no outlet to this intensity, no confirmation, just the sagging pallidness of existence limp in my inability to grasp it. I ground down my teeth. I could not understand why no one else seemed to acknowledge this immense pressure, in fact they actively avoided it. Didn't they know it too? Nothing was real.</p>
+    <p>Now, everything is brightly, directly, luminously real&#8212; only because I understand that none of it is real. Only by letting go the waiting for it 'to be real' has it returned in fullness. Before, because everything was 'real', it was not real. Its realness was unconvincing because it showed no capacity to accommodate itself in its own raw blunt facts. Now, by having realized that nothing is real, the world is free to be real and experienced in its totality, accommodating all of itself, including my apparent ego-standpoint, with ease.</p>
+    <p>And to have a voice, my own voice! It's possible to speak! There's no reason to say anything except for the adventure.</p>
+    <p><em>Every time, unflinchingly, I am here.</em></p>
+  </div>
+
+  <!-- Relevant Sources -->
+  <div class="relevant-sources">
+    <div class="relevant-sources-label">Relevant Sources</div>
+    <ul>
+      <li>Lacan, Jacques. <em>Book XX: Encore</em>. 1975. <a href="https://www.goodreads.com/book/show/75487.On_Feminine_Sexuality_the_Limits_of_Love_and_Knowledge?ref=nav_sb_ss_1_10" target="_blank" rel="noopener noreferrer">x</a></li>
+      <li>Wolfgang, Giegerich. <em>Animus-Psychologie</em>. 1994. <a href="https://www.goodreads.com/book/show/2579847-animus-psychologie?ref=nav_sb_ss_1_18" target="_blank" rel="noopener noreferrer">x</a> (currently only available in German and Portuguese)</li>
+      <li>Wolfgang, Giegerich. <em>Coniunctio</em>. 2021. <a href="https://www.goodreads.com/book/show/62684329-coniunctio" target="_blank" rel="noopener noreferrer">x</a></li>
+      <li>LearningGNM. <em>Aggressive Constellation</em>. <a href="https://learninggnm.com/constellations/documents/aggressive_constellation.html" target="_blank" rel="noopener noreferrer">x</a></li>
+      <li>Chapman, Alan. <em>Magia and Gender</em>. 2023. <a href="https://barbarouswords.substack.com/p/magia-and-gender" target="_blank" rel="noopener noreferrer">x</a></li>
+      <li>Just as I am ready to publish this text, there is a new episode of <em>Passport Through Hades</em> out which touches on some similar themes: "<a href="https://shows.acast.com/passport-through-hades/episodes/69f8d209d9139f13fba16395" target="_blank" rel="noopener noreferrer">Reason is a lie; for there is a factor infinite</a>" I recommend it, and in general I highly recommend Alan Chapman's work.</li>
+    </ul>
+  </div>
+
+  <!-- Footnotes -->
+  <div class="footnotes">
+    <div class="footnotes-label">Notes</div>
+    <ol>
+      <li id="fn1">Overall in this text, I am not keeping to a strictly Lacanian definition of jouissance, nor to any of Lacan's terms. <a href="#ref1" aria-label="Return to text">↑</a></li>
+      <li id="fn2">"The plausibility of what I am claiming here - namely, that woman knows nothing of this jouissance - is underscored by the fact that in all the time people have been begging them, begging them on their hands and knees - I spoke last time of women psychoanalysts - to try to tell us, not a word! We've never been able to get anything out of them." (Lacan 75) <a href="#ref2" aria-label="Return to text">↑</a></li>
+      <li id="fn3">To be fair, very few people of either sex have any idea what is going on save for their maddening parapraxes. <a href="#ref3" aria-label="Return to text">↑</a></li>
+      <li id="fn4">cf. The Goddess is silence. <a href="#ref4" aria-label="Return to text">↑</a></li>
+      <li id="fn5">Approximate rendition: 'It's midnight, I would like to have some juice. I'll just traipse downstairs and get some juice. Whoops I tripped and engendered the entire realm of mortal existence. Alright, I'll still get the juice.' <a href="#ref5" aria-label="Return to text">↑</a></li>
+      <li id="fn6">Of course, Lacan as an exemplary man of his time is not making any metaphysical claims in his discourse. Just as I am not making any metaspiritual claims in mine. (i.e. all I say, I say in terms of Spirit.) <a href="#ref6" aria-label="Return to text">↑</a></li>
+      <li id="fn7">Cf. Hegel's Human and Divine Law from the <em>Phenomenology of Spirit</em>, introduced around §446 <a href="#ref7" aria-label="Return to text">↑</a></li>
+      <li id="fn8">The very attitude that we need to 'fix', ourselves or the world in any way, by our own crude positivistic interventions, is itself symptomatic of the Spirit of the Times&#8212; personally distasteful to me, yet I can read it as having been our prevailing cultural condition for quite a while, and assume it has its own telos. <a href="#ref8" aria-label="Return to text">↑</a></li>
+      <li id="fn9">I could introduce more complexity with the 'dimension' of timelessness here, where the 'perceived event' and its 'effects' are in no way separable but 'occurring' at once. Linear time is a particular illusion required for the experience and phenomenology of linear history. Cf. Matte Blanco's symmetry of the unconscious. I will leave it out for now. <a href="#ref9" aria-label="Return to text">↑</a></li>
+      <li id="fn10">Spirit <em>is</em> a bone. <a href="#ref10" aria-label="Return to text">↑</a></li>
+      <li id="fn11">Cf. Parmenides "The thing that can be thought and that for the sake of which the thought exists is the same". <a href="#ref11" aria-label="Return to text">↑</a></li>
+      <li id="fn12">The way I have phrased it, this could imply an external agent, in the way that for example (in the positivistic reading) Semele was struck by the sight of Zeus. But I mean to hold and deepen the tension here: Thought does not come from 'outside of you', but neither does it come from 'you'. <a href="#ref12" aria-label="Return to text">↑</a></li>
+      <li id="fn13">This phrase is from Giegerich, this concept is from everywhere, including my own experience. <a href="#ref13" aria-label="Return to text">↑</a></li>
+      <li id="fn14">I believe Wilfred Bion spoke of this. <a href="#ref14" aria-label="Return to text">↑</a></li>
+      <li id="fn15">There is a sense in which this 'refusal to look' is itself the total elaboration of the lack, which has to be fully exhausted to be determined, this is a logical requirement modernity is, unbeknownst to itself, faithfully carrying out. In knowing this one has the intimation of the telos of modern Soul set visibly on a platter, etc etc etc, I do not want to critique the world but pin it down by knowing it in and through all continuous movement. <a href="#ref15" aria-label="Return to text">↑</a></li>
+      <li id="fn16">I have come across descriptions approximating some aspect of what I say here of verticality vs horizontality from at least four distinct sources. I am going to cite none of them. Figure it out!&#8212; relenting, actually, I was recently reminded that Simon Mirk refers to 'the disappearance of the vertical axis' in this <a href="https://simonmirk.substack.com/p/got-a-light-section-i-positive-spirit" target="_blank" rel="noopener noreferrer">very good, relevant essay</a>&#8212; &amp; another source is Giegerich, to no one's surprise. <a href="#ref16" aria-label="Return to text">↑</a></li>
+      <li id="fn17">Libido as a word is a guise for Soul. So one could say, 'The Soul of Man is organized around the Anima (that is, itself) . . . ' <a href="#ref17" aria-label="Return to text">↑</a></li>
+      <li id="fn18">Chapter 1, <a href="https://sacred-texts.com/oto/engccxx.htm" target="_blank" rel="noopener noreferrer">8. "The Khabs is in the Khu, not the Khu in the Khabs"</a>. Chapter 2, 3. "In the sphere I am everywhere the centre, as she, the circumference, is nowhere found. 4. Yet she shall be known &amp; I never." <a href="#ref18" aria-label="Return to text">↑</a></li>
+      <li id="fn19">Religious ascetics of most stripes, for example, are oriented towards the vertical. Oracular speech requires vertical orientation, and so does good art-making and authentic creativity in general. <a href="#ref19" aria-label="Return to text">↑</a></li>
+      <li id="fn20">I'm summarizing Giegerich's summary of Soul's logical history. <a href="#ref20" aria-label="Return to text">↑</a></li>
+      <li id="fn21">Just as a psychotically structured subject has to continuously interpret and define his idiosyncratic symbols to maintain himself as a separate subject, or the perversely structured subject has to continuously provoke with their perversion to sustain some stabilization analogous to actual structural castration which they lack. <a href="#ref21" aria-label="Return to text">↑</a></li>
+      <li id="fn22">Cf. Jung's "It was then that I ceased to belong to myself alone, ceased to have the right to do so. From then on, my life belonged to the generality." from <em>Memories, Dreams, Reflections</em>, 192. <a href="#ref22" aria-label="Return to text">↑</a></li>
+      <li id="fn23">Cf. "Why is Aion the true name for God? Because the fact God is a plurality (so everyone - whether they recognise it or not - is in one sense analogically male in a specific relationship) seems to be the salient aspect." Chapman, <em>Magia and Gender</em>. With this I am trying to imply that there is a legitimate structural reason for the reverberating cultural parody of this 'all-male-ness'. (the phenomenology of 'feminism', which is a negation of the feminine, by the way.) <a href="#ref23" aria-label="Return to text">↑</a></li>
+      <li id="fn24">One demonstration of this is the phenomenon where a woman mistakenly calls you every name in the familial kitchen sink down a descending list before she arrives at yours. <a href="#ref24" aria-label="Return to text">↑</a></li>
+      <li id="fn25">Wikipedia says his mother was 'ardently Catholic'. I am actively restraining myself from psychoanalysing him. <a href="#ref25" aria-label="Return to text">↑</a></li>
+      <li id="fn26">In the similar sense that Hegel articulated Christianity as having the real truth, but still within the form of picture-thinking and not reaching the level of the Concept, i.e. still as horizontal positing, not reaching the logically negative. <a href="#ref26" aria-label="Return to text">↑</a></li>
+      <li id="fn27">Giegerich calls this 'always-alreadyness' (that the goal is already present from the outset to attain it) the ouroboric logic of the copula, prevalent in the historic age of metaphysics. (and prior) see: <em>Coniunctio.</em> In this definition, the copula is still happening on the level of Soul, so is already pre-given to people and realized 'outside' or 'underneath/above' them. I am here indicating the nearly inconceivable radicality of realizing it directly for oneself, and holding through all the contradictions that entails. <a href="#ref27" aria-label="Return to text">↑</a></li>
+      <li id="fn28">Hegel called this 'positive religion'. <a href="#ref28" aria-label="Return to text">↑</a></li>
+    </ol>
+  </div>
+
+</div>
+
+<script>
+  const html = document.documentElement;
+  const label = document.getElementById('toggle-label');
+
+  const saved = localStorage.getItem('theme');
+  if (saved) { html.setAttribute('data-theme', saved); updateLabel(); }
+  else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    html.setAttribute('data-theme', 'dark'); updateLabel();
+  }
+
+  function toggleTheme() {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateLabel();
+  }
+
+  function updateLabel() {
+    label.textContent = html.getAttribute('data-theme') === 'dark' ? 'Dark' : 'Light';
+  }
+
+  document.getElementById('toggle').parentElement.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); }
+  });
+
+  function togglePdf() {
+    const btn = document.getElementById('pdf-toggle');
+    const links = document.getElementById('pdf-links');
+    const open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    if (window.innerWidth <= 768) {
+      btn.classList.toggle('active', open);
+    }
+  }
+
+  /* Footnote behavior: hover tooltip on desktop, inline expansion on mobile */
+  const isMobile = () => window.innerWidth <= 768;
+
+  if (isMobile()) {
+    document.querySelectorAll('.fn-ref a').forEach(a => {
+      a.dataset.href = a.getAttribute('href');
+      a.removeAttribute('href');
+    });
+  }
+
+  document.querySelectorAll('.fn-ref').forEach(ref => {
+
+    ref.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      const tip = ref.querySelector('.fn-tooltip');
+      if (!tip) return;
+      ref.classList.remove('tip-left', 'tip-right');
+      tip.style.display = 'block';
+      const tw = tip.offsetWidth;
+      tip.style.display = '';
+      const r = ref.getBoundingClientRect();
+      const vw = window.innerWidth;
+      if (r.left + r.width / 2 - tw / 2 < 8) ref.classList.add('tip-left');
+      else if (r.left + r.width / 2 + tw / 2 > vw - 8) ref.classList.add('tip-right');
+    });
+
+    ref.addEventListener('click', e => {
+      if (!isMobile()) return;
+      e.preventDefault();
+
+      const a = ref.querySelector('a');
+      const refId = (a?.dataset.href || a?.getAttribute('href') || '').replace('#', '');
+      const fnEl = refId ? document.getElementById(refId) : null;
+      const fnText = fnEl
+        ? fnEl.innerHTML.replace(/<a[^>]*aria-label="Return to text"[^>]*>↑<\/a>/i, '').trim()
+        : ref.querySelector('.fn-tooltip')?.innerHTML?.trim();
+      const fnNumber = ref.querySelector('a')?.textContent?.trim();
+
+      const parentBlock = ref.closest('p, li, blockquote') || ref.parentElement;
+      let expand = parentBlock.nextElementSibling;
+      if (expand && !expand.classList.contains('fn-inline-expand')) expand = null;
+
+      const alreadyOpen = expand && expand.dataset.fnId === refId;
+
+      window.addEventListener('resize', () => {
+        if (!isMobile()) {
+          document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+          document.querySelectorAll('.fn-ref a').forEach(a => {
+            if (a.dataset.href) {
+              a.setAttribute('href', a.dataset.href);
+              delete a.dataset.href;
+            }
+          });
+          document.getElementById('pdf-toggle').classList.remove('active');
+        } else {
+          document.querySelectorAll('.fn-ref a').forEach(a => {
+            if (a.getAttribute('href')) {
+              a.dataset.href = a.getAttribute('href');
+              a.removeAttribute('href');
+            }
+          });
+        }
+      });
+
+      document.querySelectorAll('.fn-inline-expand').forEach(el => el.remove());
+      document.querySelectorAll('.fn-ref.active').forEach(el => el.classList.remove('active'));
+
+      if (!alreadyOpen) {
+        expand = document.createElement('div');
+        expand.className = 'fn-inline-expand open';
+        expand.dataset.fnId = refId;
+        expand.innerHTML = `<div class="fn-inline-expand-number">Note ${fnNumber}</div>${fnText}`;
+        parentBlock.insertAdjacentElement('afterend', expand);
+        ref.classList.add('active');
+      }
+    });
+
+  });
+</script>
+</body>
+</html>
