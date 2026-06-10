@@ -13,10 +13,9 @@
     --fg: #C7BFBB;
     --fg-dim: #A09994;
     --border: rgba(232,230,224,0.12);
-    --border-hover: rgba(232,230,224,0.28);
-    --accent: #e8e6e0;
+    --border-hover: #8f3838;
+    --accent: #8f3838;
     --surface: #120A0A;
-    --col-width: calc(50vw - 1px);
     --topbar-h: 58px;
   }
 
@@ -39,13 +38,13 @@
   }
 
   /* ── TOPBAR ── */
+
   #topbar {
     height: var(--topbar-h);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 14px;
-    border-bottom: 1px solid var(--border);
     position: relative;
     z-index: 10;
     flex-shrink: 0;
@@ -67,13 +66,41 @@
     font-style: italic;
   }
   #site-title {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 20px;
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--fg);
   }
+
   .topbar-sep { color: var(--fg-dim); font-size: 11px; }
+
+  /* ── TAB BUTTONS ── */
+  #tab-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 35px;
+  }
+  .tab-btn {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    color: var(--fg-dim);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    line-height: 1;
+  }
+  .tab-btn:hover { color: var(--fg); }
+  .tab-btn.active {
+    color: var(--fg);
+    border-color: var(--border-hover);
+  }
 
   /* ── BODY ── */
   #body {
@@ -86,9 +113,9 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid var(--border);
     overflow: hidden;
     position: relative;
+    padding: 2rem 4rem 1rem;
   }
   .column:last-child { border-right: none; }
 
@@ -107,29 +134,34 @@
   /* ── MASONRY ── */
   .masonry {
     columns: 2;
-    column-gap: 10px;
+    column-gap: 25px;
   }
   .post-card {
     break-inside: avoid;
-    margin-bottom: 10px;
-    border: 0px solid var(--border);
+    margin-bottom: 20px;
+    border: 1px solid var(--bg);
+    border-radius: 25px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: border-color 0.2s ease;
     background: var(--bg);
+    padding: 20px 20px 10px;
   }
-  .post-card:hover { border-color: var(--border-hover); }
+  .post-card:hover { 
+    border: 1px solid;
+    border-color: var(--border-hover); }
 
   .post-card.type-image img {
     display: block;
     width: 100%;
     height: auto;
     object-fit: contain;
+
   }
 
   .post-card.type-text {
-    padding: 10px 10px 2px;
+    padding: 35px 45px 10px;
   }
   .post-card.type-text .post-title {
     font-family: 'Playfair Display', serif;
@@ -153,9 +185,6 @@
     font-style: italic;
   }
 
-  .post-card.type-other {
-    padding: 10px 10px 2px;
-  }
   .post-card.type-other .post-body {
     font-size: 13px;
     line-height: 1.6;
@@ -341,6 +370,7 @@
       border-bottom: 1px solid var(--border);
       height: auto;
       overflow: visible;
+      padding: 0.25rem;
     }
     .col-scroll {
       overflow: visible;
@@ -353,6 +383,14 @@
     }
     .col-pagination { justify-content: flex-end; }
     #topbar { gap: 10px; }
+
+    .post-card {
+    padding: 10px 10px 2px;
+  }
+
+    .post-card.type-text {
+    padding: 5px 5px 2px;
+  }
 
     .post-card.type-text .post-body { font-size: 14px; }
 
@@ -405,23 +443,26 @@
 
 <div id="topbar">
   <a id="logo" href="https://umbralclarity.com" target="_blank"></a>
-  <span class="topbar-sep">///</span>
   <span id="site-title"></span>
+  <div id="tab-bar">
+    <button class="tab-btn active" data-tab="text">text</button>
+    <button class="tab-btn" data-tab="image">image</button>
+  </div>
 </div>
 
 <div id="body">
-  <div class="column" id="col-left">
-    <div class="col-scroll" id="scroll-left">
-      <div class="masonry" id="masonry-left"></div>
+  <div class="column" id="col-text">
+    <div class="col-scroll" id="scroll-text">
+      <div class="masonry" id="masonry-text"></div>
     </div>
-    <div class="col-pagination" id="pg-left"></div>
+    <div class="col-pagination" id="pg-text"></div>
   </div>
 
-  <div class="column" id="col-right">
-    <div class="col-scroll" id="scroll-right">
-      <div class="masonry" id="masonry-right"></div>
+  <div class="column" id="col-image" style="display:none;">
+    <div class="col-scroll" id="scroll-image">
+      <div class="masonry" id="masonry-image"></div>
     </div>
-    <div class="col-pagination" id="pg-right"></div>
+    <div class="col-pagination" id="pg-image"></div>
   </div>
 </div>
 
@@ -815,8 +856,19 @@ document.addEventListener('keydown', e => {
 });
 
 // ── BOOT ─────────────────────────────────────────────────────
-createFeedController({ tag: CONFIG.leftTag,  masonryId: 'masonry-left',  pgId: 'pg-left',  scrollId: 'scroll-left'  });
-createFeedController({ tag: CONFIG.rightTag, masonryId: 'masonry-right', pgId: 'pg-right', scrollId: 'scroll-right' });
+createFeedController({ tag: CONFIG.leftTag,  masonryId: 'masonry-text',  pgId: 'pg-text',  scrollId: 'scroll-text'  });
+createFeedController({ tag: CONFIG.rightTag, masonryId: 'masonry-image', pgId: 'pg-image', scrollId: 'scroll-image' });
+
+// ── TAB SWITCHING ─────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('col-text').style.display  = tab === 'text'  ? '' : 'none';
+    document.getElementById('col-image').style.display = tab === 'image' ? '' : 'none';
+  });
+});
 
 </script>
 </body>
