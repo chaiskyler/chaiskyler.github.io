@@ -12,9 +12,9 @@
     --bg: #0D0505;
     --fg: #C7BFBB;
     --fg-dim: #A09994;
-    --border: rgba(232,230,224,0.12);
+    --border: #251919;
     --border-hover: #8f3838;
-    --accent: #8f3838;
+    --accent: #38418f;
     --surface: #120A0A;
     --topbar-h: 58px;
   }
@@ -99,7 +99,7 @@
   .tab-btn:hover { color: var(--fg); }
   .tab-btn.active {
     color: var(--fg);
-    border-color: var(--border-hover);
+    border-color: var(--accent);
   }
 
   /* ── BODY ── */
@@ -125,7 +125,7 @@
     overflow-x: hidden;
     padding: 20px 16px 12px;
     scrollbar-width: thin;
-    scrollbar-color: var(--border-hover) transparent;
+    scrollbar-color: var(--accent) transparent;
   }
   .col-scroll::-webkit-scrollbar { width: 4px; }
   .col-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -150,7 +150,7 @@
   }
   .post-card:hover { 
     border: 1px solid;
-    border-color: var(--border-hover); }
+    border-color: var(--border); }
 
   .post-card.type-image img {
     display: block;
@@ -378,7 +378,7 @@
       padding: 16px 12px 8px;
     }
     .masonry {
-      columns: 2;
+      columns: 1;
       column-gap: 0px;
     }
     .col-pagination { justify-content: flex-end; }
