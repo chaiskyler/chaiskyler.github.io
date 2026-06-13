@@ -142,7 +142,8 @@
   }
   .post-card:hover { 
     border: 1px solid;
-    border-color: var(--border); }
+    border-color: var(--border);
+    background: var(--surface) }
 
   .post-card.type-text {
     padding: 35px 45px 10px;
@@ -156,7 +157,7 @@
     padding-top: 10px;
   }
   .post-card.type-image .post-body {
-    padding-top: 12px;
+    padding-top: 16px;
   }
   .post-card .post-title {
     font-family: 'Playfair Display', serif;
@@ -188,7 +189,7 @@
     letter-spacing: 0.06em;
     color: var(--fg-dim);
     font-variant-numeric: tabular-nums;
-    padding: 6px 8px 8px;
+    padding: 14px 10px 10px;
   }
 
   /* ── PAGINATION ── */
@@ -267,11 +268,11 @@
   #lightbox.open { display: flex; }
   #lb-inner {
     position: relative;
-    max-width: min(820px, 92vw);
+    max-width: min(900px, 92vw);
     max-height: 95vh;
     overflow-y: auto;
-    border: 1px solid var(--border-hover);
-    border-radius: 10px;
+    border: 1px solid var(--border);
+    border-radius: 25px;
     background: var(--surface);
     scrollbar-width: thin;
     scrollbar-color: var(--border-hover) transparent;
@@ -292,7 +293,7 @@
   }
   #lb-close:hover { color: var(--fg); }
   #lb-content {
-    padding: 28px;
+    padding: 2.5rem 2.5rem 0.5rem;
   }
   #lb-content img {
     display: block;
@@ -317,9 +318,8 @@
   #lb-content .lb-body img { max-width: 100%; height: auto; }
   #lb-content .lb-body a { color: var(--fg); }
   #lb-meta {
-    border-top: 1px solid var(--border);
     font-size: 13px;
-    padding: 6px 8px 8px;
+    padding: 14px 14px 14px;
     letter-spacing: 0.06em;
     color: var(--fg-dim);
     text-align: right;
@@ -377,7 +377,13 @@
 
     .post-card .post-body { font-size: 14px; }
 
-    #lb-content { padding: 18px; }
+    #lb-content { 
+      padding: 1.25rem 1.25rem 0.5rem;
+     }
+
+    #lb-meta {
+      padding: 0.3rem 0.8rem 0.8rem;
+    }
 
     #lb-nav {
       display: flex;
