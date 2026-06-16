@@ -175,6 +175,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 18;
     -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
   }
 
   .post-card .post-body i,
@@ -313,6 +314,7 @@
     font-size: 17px;
     line-height: 1.75;
     color: var(--fg-dim);
+    overflow-wrap: break-word;
   }
 
   #lb-content .lb-body p { margin-bottom: 10px; }
@@ -428,6 +430,7 @@
     // Left column tag, right column tag
     leftTag:   'text',
     rightTag:  'image',
+    thirdTag:  'log',
   };
 </script>
 
@@ -437,6 +440,7 @@
   <div id="tab-bar">
     <button class="tab-btn active" data-tab="text">text</button>
     <button class="tab-btn" data-tab="image">image</button>
+    <button class="tab-btn" data-tab="log">log</button>
   </div>
 </div>
 
@@ -454,6 +458,13 @@
     </div>
     <div class="col-pagination" id="pg-image"></div>
   </div>
+
+  <div class="column" id="col-log" style="display:none;">
+  <div class="col-scroll" id="scroll-log">
+    <div class="masonry" id="masonry-log"></div>
+  </div>
+  <div class="col-pagination" id="pg-log"></div>
+</div>
 </div>
 
 <!-- LIGHTBOX -->
@@ -841,6 +852,7 @@ document.addEventListener('keydown', e => {
 // ── BOOT ─────────────────────────────────────────────────────
 createFeedController({ tag: CONFIG.leftTag,  masonryId: 'masonry-text',  pgId: 'pg-text',  scrollId: 'scroll-text'  });
 createFeedController({ tag: CONFIG.rightTag, masonryId: 'masonry-image', pgId: 'pg-image', scrollId: 'scroll-image' });
+createFeedController({ tag: CONFIG.thirdTag, masonryId: 'masonry-log', pgId: 'pg-log', scrollId: 'scroll-log' });
 
 // ── TAB SWITCHING ─────────────────────────────────────────────
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -850,6 +862,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById('col-text').style.display  = tab === 'text'  ? '' : 'none';
     document.getElementById('col-image').style.display = tab === 'image' ? '' : 'none';
+    document.getElementById('col-log').style.display = tab === 'log' ? '' : 'none';
   });
 });
 
