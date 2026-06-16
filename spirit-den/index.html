@@ -365,7 +365,7 @@
     .col-scroll {
       overflow: visible;
       height: auto;
-      padding: 16px 12px 8px;
+      padding: 28px 12px 8px;
     }
     .masonry {
       columns: 1;
@@ -375,14 +375,23 @@
     #topbar { gap: 10px; }
 
     .post-card {
-      padding: 10px 10px 2px;
+      padding: 20px 20px 2px;
     }
 
     .post-card.type-text {
-      padding: 5px 5px 2px;
+      padding: 20px 20px 2px;
     }
 
-    .post-card .post-body { font-size: 14px; }
+    .post-card .post-body { font-size: 14px;
+    }
+
+
+    .post-card.type-image .post-title,
+     .post-card.type-image .post-body {
+    padding-left: 0px;
+    padding-right: 0px;
+    }
+   
 
     #lb-content { 
       padding: 1.25rem 1.25rem 0.5rem;
@@ -418,6 +427,7 @@
       margin-top: 40px;
     }
   }
+
 </style>
 </head>
 <body class="preload">
