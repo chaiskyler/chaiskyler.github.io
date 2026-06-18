@@ -482,7 +482,6 @@
     brandUrl:  'umbralclarity.com',
     siteTitle: 'spirit den',
     blogName:  'spirit-den',
-    apiKey:    'uYUWxqEaBsfh7He1OA40Td2UisA4DEKwQ3k451GvVwRGJq14BZ',
     limit:     20,
     // Left column tag, right column tag
     leftTag:   'text',
@@ -558,18 +557,13 @@ window.addEventListener('load', () => {
 
 // ── TUMBLR API v2 FETCH ───────────────────────────────────────
 async function fetchPosts(tag, offset) {
-  const url = `https://api.tumblr.com/v2/blog/${CONFIG.blogName}.tumblr.com/posts`
-    + `?tag=${encodeURIComponent(tag)}`
-    + `&limit=${CONFIG.limit}`
-    + `&offset=${offset}`
-    + `&npf=false`
-    + `&api_key=${CONFIG.apiKey}`;
-
-  const res = await fetch(url);
+  const res = await fetch(
+    `https://circuitfetcher.chaiskyler.workers.dev/?tag=${encodeURIComponent(tag)}&offset=${offset}&limit=${CONFIG.limit}`
+  );
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const json = await res.json();
   if (json.meta && json.meta.status >= 400) throw new Error(json.meta.msg || 'API error');
-  return json.response; // { posts: [...], total_posts: N }
+  return json.response;
 }
 
 // ── NORMALISE API POST → item shape ──────────────────────────
