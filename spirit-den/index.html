@@ -851,10 +851,11 @@ function createFeedController({ tag, masonryId, pgId, scrollId }) {
       // Detect last page by result count, not total_posts
       // (total_posts reflects whole-blog count, not per-tag count)
       if (items.length < CONFIG.limit) {
-         totalPages = page;
-       } else if (totalPages === null) {
-         totalPages = page + 1; // at minimum one more page exists
-       }
+      totalPages = page;
+      } else if (totalPages === null || totalPages <= page) {
+      totalPages = page + 1;
+      }
+      currentPage = page; 
 
       renderCards(items, masonryEl, openLightbox);
       scrollEl.scrollTop = 0;
