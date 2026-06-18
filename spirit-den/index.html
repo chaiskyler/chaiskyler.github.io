@@ -351,7 +351,38 @@
   #lb-prev { left: 12px; }
   #lb-next { right: 12px; }
 
-  /* ── MOBILE ── */
+  /* ── POST IMAGE LAYOUT ── */
+  .post-images {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow: hidden;
+  }
+  .post-img-row {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+  }
+  .post-img-row img {
+    flex: 1;
+    width: 0;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    min-width: 0;
+  }
+  .post-img-row:not(.multi) img {
+    width: 100%;
+    flex: unset;
+    height: auto;
+  }
+  .post-img-row.multi img {
+    height: 160px;
+    object-fit: cover;
+  }
+
+
   @media (max-width: 700px) {
     html, body { overflow: auto; height: auto; }
     #body { flex-direction: column; height: auto; overflow: visible; }
@@ -536,6 +567,7 @@ function normalisePost(post) {
   // Build rawHtml and imgs depending on post type
   let rawHtml = '';
   let imgs = [];
+  let layout = '';
   let title = post.summary || '';
 
   switch (post.type) {
@@ -544,6 +576,8 @@ function normalisePost(post) {
       rawHtml = post.caption || '';
       imgs = (post.photos || []).map(p => ({ src: p.original_size.url }));
       title = '';
+      // photoset_layout is a string like "12" meaning row of 1, row of 2
+      if (post.photoset_layout) layout = post.photoset_layout;
       break;
     }
     case 'text': {
@@ -596,7 +630,7 @@ function normalisePost(post) {
       .map(i => ({ src: i.src, srcset: i.getAttribute('srcset') || '' }));
   }
 
-  return { title, date, rawHtml, imgs, link: post.post_url || '' };
+  return { title, date, rawHtml, imgs, layout, link: post.post_url || '' };
 }
 
 function formatDate(d) {
@@ -625,19 +659,49 @@ function renderCards(items, masonryEl, onCardClick) {
     card.className = hasImages ? 'post-card type-image' : 'post-card type-text';
 
     if (hasImages) {
-      const img = document.createElement('img');
-      const imgData = item.imgs[0];
-      if (imgData.srcset) {
-      const entries = imgData.srcset.split(',').map(s => s.trim().split(/\s+/));
-      const best = entries.reduce((a, b) => (parseInt(b[1]) > parseInt(a[1]) ? b : a), entries[0]);
-      img.src = (best && best[0]) ? best[0] : imgData.src;
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'post-images';
+
+      // Build rows from photoset_layout if present (e.g. "12" = [1,2])
+      // Each digit = number of images in that row.
+      const layoutStr = item.layout || '';
+      let rows = [];
+      if (layoutStr) {
+        let idx = 0;
+        for (const ch of layoutStr) {
+          const count = parseInt(ch);
+          if (!isNaN(count) && count > 0) {
+            rows.push(item.imgs.slice(idx, idx + count));
+            idx += count;
+          }
+        }
+        // Any remaining images not covered by layout go in a final row
+        if (idx < item.imgs.length) rows.push(item.imgs.slice(idx));
       } else {
-      img.src = imgData.src;
-     }
-      img.alt = '';
-      img.loading = 'lazy';
-      img.style.cssText = 'width:100%;height:auto;display:block;';
-      card.appendChild(img);
+        // No layout info — stack all images vertically
+        rows = item.imgs.map(img => [img]);
+      }
+
+      rows.forEach(rowImgs => {
+        const row = document.createElement('div');
+        row.className = rowImgs.length > 1 ? 'post-img-row multi' : 'post-img-row';
+        rowImgs.forEach(imgData => {
+          const img = document.createElement('img');
+          if (imgData.srcset) {
+            const entries = imgData.srcset.split(',').map(s => s.trim().split(/\s+/));
+            const best = entries.reduce((a, b) => (parseInt(b[1]) > parseInt(a[1]) ? b : a), entries[0]);
+            img.src = (best && best[0]) ? best[0] : imgData.src;
+          } else {
+            img.src = imgData.src;
+          }
+          img.alt = '';
+          img.loading = 'lazy';
+          row.appendChild(img);
+        });
+        imgContainer.appendChild(row);
+      });
+
+      card.appendChild(imgContainer);
     }
 
     if (realTitle) {
